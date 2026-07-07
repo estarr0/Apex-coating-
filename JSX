@@ -1,0 +1,810 @@
+import React, { useState, useMemo, useEffect, useRef } from "react";
+import {
+  Paintbrush,
+  Home,
+  Palette,
+  Package,
+  Mail,
+  Sun,
+  Moon,
+  X,
+  Plus,
+  Check,
+  Phone,
+  MapPin,
+  ChevronDown,
+} from "lucide-react";
+
+/* ------------------------------------------------------------------ */
+/* DATA                                                                */
+/* ------------------------------------------------------------------ */
+
+const PRODUCTS = {
+  matt: {
+    name: "Acrylic Emulsion (Vinyl Matt)",
+    tag: "Exterior",
+    blurb:
+      "A superior architectural paint on durable acrylic resin. Alkali-resistant, built for heavy rain, dry seasons and strong sun.",
+    prep:
+      "Surfaces must be clean, dry and free of oil, grease, wax or dust. Remove old flaky material. No priming needed on new smooth surfaces. Over a glossy surface, sand to a matt finish first.",
+    application:
+      "Soft paintbrush or roller. One or two coats depending on surface porosity. Clean equipment with clean tap water immediately after use.",
+    prices: { "20L": 8600, "10L": 4700, "4L": 1900, "1L": 550 },
+  },
+  weathershield: {
+    name: "Weathershield",
+    tag: "Premium exterior",
+    blurb:
+      "Heavy-duty exterior protection for facades exposed to the harshest weather. Also available in a silicone-based formulation.",
+    prep:
+      "All surfaces clean, dry, free from contaminants and loose material. New surfaces require an alkali-resisting undercoat before topcoat.",
+    application:
+      "Brush, roller or spray. Two coats recommended for full weather protection. Allow full cure time between coats.",
+    prices: { "20L": 9500, "10L": 5000, "4L": 2000, "1L": 650 },
+  },
+  silk: {
+    name: "Vinyl Wallsheen (Silk)",
+    tag: "Interior",
+    blurb:
+      "A high-performance interior paint with a cool satin finish. High wet-scrub resistance, easy to clean — suited to homes, hospitals and offices.",
+    prep:
+      "Surfaces clean, free from grease, oil, wax, moisture and loose material. On new surfaces, apply one coat of alkali-resisting undercoat first.",
+    application:
+      "Soft paintbrush, roller or spray. Apply at least two coats after the undercoat. Clean equipment with tap water immediately after use.",
+    prices: { "20L": 10000, "10L": 5500, "4L": 2100, "1L": 650 },
+  },
+  gloss: {
+    name: "Supergloss",
+    tag: "High gloss",
+    blurb:
+      "Oil-modified alkyd enamel for a long-lasting, easy-clean coat. Interior and exterior on wood, metal, asbestos and concrete.",
+    prep:
+      "Clean, dry surfaces free of oil, grease, wax and old flaky paint — use Apex paint remover if needed. Fresh surfaces need a primer undercoat first.",
+    application:
+      "Soft brush, air spray or dipping. One or two coats over the undercoat. Clean equipment with terpentine or white spirit.",
+    prices: { "20L": 10500, "10L": 5500, "4L": 2250, "1L": 650 },
+  },
+};
+
+const GROUPS = [
+  {
+    id: "neutral",
+    label: "Whites & Neutrals",
+    swatch: "#F2ECDA",
+    product: "silk",
+    shades: [
+      { name: "Soft White", hex: "#F5F1E7" },
+      { name: "Ivory", hex: "#F0E6C9" },
+      { name: "Magnolia", hex: "#F2E9CE" },
+      { name: "Buttermilk", hex: "#F2E2B8" },
+      { name: "Vellum", hex: "#EDE4C8" },
+      { name: "Full Moon", hex: "#F5F0DD" },
+      { name: "Porcelain Bowl", hex: "#F3EFD9" },
+      { name: "Antique Cream", hex: "#EDE0BE" },
+    ],
+  },
+  {
+    id: "yellow",
+    label: "Yellow",
+    swatch: "#F0CB53",
+    product: "matt",
+    shades: [
+      { name: "Mustard", hex: "#C99A3E" },
+      { name: "Jasmine", hex: "#F2E27A" },
+      { name: "Just Yellow", hex: "#F2CB2B" },
+      { name: "African Gold", hex: "#C08A2E" },
+      { name: "Yellow Canary", hex: "#F2D53C" },
+      { name: "Golden Sun", hex: "#F0CB53" },
+      { name: "Summer Yellow", hex: "#F0DE7E" },
+      { name: "Tivoli Gold", hex: "#E8A93A" },
+      { name: "Soleil", hex: "#F0D23C" },
+    ],
+  },
+  {
+    id: "orange",
+    label: "Orange",
+    swatch: "#E8862B",
+    product: "gloss",
+    shades: [
+      { name: "Tango", hex: "#E8862B" },
+      { name: "Peach Melba", hex: "#F0B98A" },
+      { name: "Orange Tan", hex: "#D9631F" },
+      { name: "Bokhara", hex: "#D9601F" },
+      { name: "Croquet Orange", hex: "#E8601F" },
+      { name: "Morroccan Sun", hex: "#E8862B" },
+      { name: "Ginger Snap", hex: "#C4602F" },
+      { name: "Sundown", hex: "#E0A468" },
+    ],
+  },
+  {
+    id: "red",
+    label: "Red & Pink",
+    swatch: "#C4293A",
+    product: "gloss",
+    shades: [
+      { name: "Rusty Red", hex: "#B5342A" },
+      { name: "Geranium", hex: "#C4293A" },
+      { name: "Brick Dust", hex: "#C4485A" },
+      { name: "Deco Red", hex: "#A61F2E" },
+      { name: "Coral Pink", hex: "#D97C86" },
+      { name: "Powder Pink", hex: "#EFC0CB" },
+      { name: "Dawn Pink", hex: "#EAC7BE" },
+      { name: "Riva Red", hex: "#C21F26" },
+      { name: "Sentry Red", hex: "#9E1B24" },
+    ],
+  },
+  {
+    id: "purple",
+    label: "Purple & Lilac",
+    swatch: "#8E7FC7",
+    product: "silk",
+    shades: [
+      { name: "Mulberry", hex: "#4A1B33" },
+      { name: "Spanish Violet", hex: "#5A2C82" },
+      { name: "Victoria Plum", hex: "#3D1A44" },
+      { name: "Wild Lilac", hex: "#C9AFD1" },
+      { name: "Clover", hex: "#91237E" },
+      { name: "Lilac", hex: "#8E7FC7" },
+      { name: "Lavender", hex: "#7F8FD1" },
+      { name: "Light Lilac", hex: "#B7A8E0" },
+      { name: "Lilac Haze", hex: "#E3D3E6" },
+    ],
+  },
+  {
+    id: "blue",
+    label: "Blue",
+    swatch: "#1F5FA8",
+    product: "weathershield",
+    shades: [
+      { name: "Billberry", hex: "#5E6FB0" },
+      { name: "Northern Sky", hex: "#5F92AC" },
+      { name: "Zircon", hex: "#A9CBD4" },
+      { name: "Aqua", hex: "#4FA6A0" },
+      { name: "Cote D'Azur", hex: "#1E3A73" },
+      { name: "Capri", hex: "#1B7A8C" },
+      { name: "Polar Blue", hex: "#7EC1E0" },
+      { name: "Cosmos", hex: "#12123B" },
+      { name: "Cornflower", hex: "#1F5FA8" },
+      { name: "True Blue", hex: "#1E6FBF" },
+      { name: "Malindi Blue", hex: "#2E6FC4" },
+      { name: "Summer Blue", hex: "#8FB9D6" },
+    ],
+  },
+  {
+    id: "green",
+    label: "Green",
+    swatch: "#1F8A4C",
+    product: "matt",
+    shades: [
+      { name: "Emerald", hex: "#1A8C55" },
+      { name: "Sage", hex: "#B7C89E" },
+      { name: "Willow", hex: "#A9C97E" },
+      { name: "Lollipop", hex: "#A9D62E" },
+      { name: "Greengage", hex: "#4F8C1F" },
+      { name: "Laurel", hex: "#1F5F2F" },
+      { name: "Beetle Green", hex: "#0F3D28" },
+      { name: "Forest Green", hex: "#1C3B22" },
+      { name: "Safaricom Green", hex: "#3FAA35" },
+      { name: "Kenya Green", hex: "#1F8A4C" },
+      { name: "Apple Mint", hex: "#A9D9B0" },
+      { name: "Mellow Sage", hex: "#7FA07A" },
+    ],
+  },
+  {
+    id: "brown",
+    label: "Brown & Tan",
+    swatch: "#A9662E",
+    product: "silk",
+    shades: [
+      { name: "Rawhide", hex: "#A9662E" },
+      { name: "Camouflage", hex: "#4A4326" },
+      { name: "Peanut Butter", hex: "#D9B87E" },
+      { name: "Toadstool", hex: "#7A5A4A" },
+      { name: "Antique Bronze", hex: "#4A3222" },
+      { name: "Catalan", hex: "#6E5B4A" },
+      { name: "Terracotta Sand", hex: "#C48A6E" },
+      { name: "Egyptian Sand", hex: "#D9A96E" },
+      { name: "Biscuit", hex: "#D9C29A" },
+      { name: "Waffle", hex: "#C9A96E" },
+      { name: "Cream Silk", hex: "#E0CE9E" },
+      { name: "Warm Apricot", hex: "#E0A97E" },
+    ],
+  },
+  {
+    id: "grey",
+    label: "Grey",
+    swatch: "#7E8A8C",
+    product: "gloss",
+    shades: [
+      { name: "Pebble", hex: "#C6C9C3" },
+      { name: "Seagull", hex: "#B7BDB3" },
+      { name: "Corvette", hex: "#9AA3A0" },
+      { name: "Steel", hex: "#7E8A8C" },
+      { name: "Pigeon", hex: "#6E7C7C" },
+      { name: "Granite", hex: "#6E7373" },
+      { name: "Slate Grey", hex: "#4A5C5C" },
+      { name: "Seal Grey", hex: "#3E4A4A" },
+      { name: "Mouse Grey", hex: "#8C8377" },
+      { name: "Ash", hex: "#B3B0A8" },
+      { name: "Moonlight", hex: "#D3D9D6" },
+      { name: "Ice", hex: "#C9D3D1" },
+    ],
+  },
+  {
+    id: "black",
+    label: "Black & Dark",
+    swatch: "#1C2320",
+    product: "gloss",
+    shades: [
+      { name: "Velvet Grey", hex: "#1C2320" },
+      { name: "Gun Metal", hex: "#16211E" },
+      { name: "Black", hex: "#0A0A0A" },
+      { name: "Lizard", hex: "#14140F" },
+      { name: "Panatella", hex: "#2A2419" },
+      { name: "Midnight Blue", hex: "#12123B" },
+    ],
+  },
+];
+
+const SIZES = ["1L", "4L", "10L", "20L"];
+
+/* ------------------------------------------------------------------ */
+/* HELPERS                                                             */
+/* ------------------------------------------------------------------ */
+
+function hexToRgb(hex) {
+  const v = hex.replace("#", "");
+  return [
+    parseInt(v.substring(0, 2), 16),
+    parseInt(v.substring(2, 4), 16),
+    parseInt(v.substring(4, 6), 16),
+  ];
+}
+function rgbToHex([r, g, b]) {
+  return (
+    "#" +
+    [r, g, b].map((x) => Math.round(x).toString(16).padStart(2, "0")).join("")
+  );
+}
+function blendHexes(hexes) {
+  if (hexes.length === 0) return "#FFFFFF";
+  const sum = hexes.reduce(
+    (acc, h) => {
+      const [r, g, b] = hexToRgb(h);
+      return [acc[0] + r, acc[1] + g, acc[2] + b];
+    },
+    [0, 0, 0]
+  );
+  return rgbToHex(sum.map((v) => v / hexes.length));
+}
+function fmt(n) {
+  return "KES " + n.toLocaleString();
+}
+
+/* ------------------------------------------------------------------ */
+/* THEME TOKENS                                                        */
+/* ------------------------------------------------------------------ */
+
+const THEME = {
+  light: {
+    bg: "#FAF8F3",
+    bgAlt: "#F1ECE0",
+    ink: "#1B2A3D",
+    inkSoft: "rgba(27,42,61,0.6)",
+    card: "#FFFFFF",
+    border: "rgba(27,42,61,0.1)",
+    accent: "#C98A1D",
+    accentSoft: "rgba(201,138,29,0.15)",
+    sidebar: "#1B2A3D",
+    sidebarText: "#F1ECE0",
+  },
+  dark: {
+    bg: "#14181F",
+    bgAlt: "#1B212B",
+    ink: "#EDEAE2",
+    inkSoft: "rgba(237,234,226,0.6)",
+    card: "#1D222B",
+    border: "rgba(237,234,226,0.1)",
+    accent: "#E0A93A",
+    accentSoft: "rgba(224,169,58,0.15)",
+    sidebar: "#0D1116",
+    sidebarText: "#EDEAE2",
+  },
+};
+
+const NAV = [
+  { id: "home", label: "Home", icon: Home },
+  { id: "colors", label: "Colours", icon: Palette },
+  { id: "products", label: "Products", icon: Package },
+  { id: "contact", label: "Contact", icon: Mail },
+];
+
+/* ------------------------------------------------------------------ */
+/* MAIN COMPONENT                                                      */
+/* ------------------------------------------------------------------ */
+
+export default function ApexSite() {
+  const [mode, setMode] = useState("light");
+  const t = THEME[mode];
+  const [active, setActive] = useState("home");
+  const [openGroup, setOpenGroup] = useState(null);
+  const [picks, setPicks] = useState([]);
+  const [feedback, setFeedback] = useState({ name: "", message: "" });
+
+  const homeRef = useRef(null);
+  const colorsRef = useRef(null);
+  const productsRef = useRef(null);
+  const contactRef = useRef(null);
+  const sectionRefs = { home: homeRef, colors: colorsRef, products: productsRef, contact: contactRef };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.dataset.section);
+        });
+      },
+      { rootMargin: "-40% 0px -50% 0px" }
+    );
+    Object.values(sectionRefs).forEach((r) => r.current && observer.observe(r.current));
+    return () => observer.disconnect();
+  }, []);
+
+  function scrollTo(id) {
+    sectionRefs[id].current?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  const blended = useMemo(() => blendHexes(picks.map((p) => p.hex)), [picks]);
+  const total = useMemo(
+    () => picks.reduce((sum, p) => sum + PRODUCTS[p.product].prices[p.size], 0),
+    [picks]
+  );
+
+  function addShade(shade, groupId, product) {
+    if (picks.length >= 5) return;
+    if (picks.some((p) => p.name === shade.name)) return;
+    setPicks([...picks, { ...shade, groupId, product, size: "4L" }]);
+  }
+  function removeShade(name) {
+    setPicks(picks.filter((p) => p.name !== name));
+  }
+  function setSize(name, size) {
+    setPicks(picks.map((p) => (p.name === name ? { ...p, size } : p)));
+  }
+
+  const activeGroup = GROUPS.find((g) => g.id === openGroup);
+  const isFull = picks.length >= 5;
+
+  const quoteBody = encodeURIComponent(
+    "Hello Apex Coating,\n\nI'd like a quote for the following shades:\n" +
+      picks
+        .map(
+          (p) =>
+            `- ${p.name} (${PRODUCTS[p.product].name}), ${p.size} — ${fmt(
+              PRODUCTS[p.product].prices[p.size]
+            )}`
+        )
+        .join("\n") +
+      `\n\nEstimated total: ${fmt(total)}\n\nThank you.`
+  );
+
+  const feedbackBody = encodeURIComponent(`Name: ${feedback.name}\n\n${feedback.message}`);
+
+  return (
+    <div
+      style={{ background: t.bg, color: t.ink, fontFamily: "'Inter', sans-serif" }}
+      className="min-h-screen transition-colors duration-300"
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+        .display { font-family: 'Fraunces', serif; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: ${t.border}; border-radius: 4px; }
+      `}</style>
+
+      {/* SIDEBAR */}
+      <nav
+        style={{ background: t.sidebar, color: t.sidebarText }}
+        className="fixed left-0 top-0 bottom-0 w-16 md:w-20 flex flex-col items-center py-6 z-50"
+      >
+        <div
+          className="w-10 h-10 rounded-full flex items-center justify-center mb-8 rotate-[-8deg]"
+          style={{ background: t.accent }}
+        >
+          <Paintbrush size={18} color={t.sidebar} />
+        </div>
+        <div className="flex-1 flex flex-col gap-1">
+          {NAV.map((n) => {
+            const Icon = n.icon;
+            const isActive = active === n.id;
+            return (
+              <button
+                key={n.id}
+                onClick={() => scrollTo(n.id)}
+                className="group relative w-11 h-11 rounded-xl flex items-center justify-center transition-colors"
+                style={{ background: isActive ? t.accentSoft : "transparent" }}
+              >
+                <Icon size={18} color={isActive ? t.accent : t.sidebarText} style={{ opacity: isActive ? 1 : 0.6 }} />
+                <span
+                  className="absolute left-14 whitespace-nowrap text-xs font-medium px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity"
+                  style={{ background: t.card, color: t.ink, border: `1px solid ${t.border}` }}
+                >
+                  {n.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <button
+          onClick={() => setMode(mode === "light" ? "dark" : "light")}
+          className="w-11 h-11 rounded-xl flex items-center justify-center mt-4"
+          style={{ background: t.accentSoft }}
+        >
+          {mode === "light" ? <Moon size={17} color={t.accent} /> : <Sun size={17} color={t.accent} />}
+        </button>
+      </nav>
+
+      <main className="pl-16 md:pl-20">
+        {/* HOME / ABOUT */}
+        <section ref={homeRef} data-section="home" className="min-h-screen flex flex-col justify-center px-8 md:px-16 py-20 max-w-4xl">
+          <p className="text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: t.accent }}>
+            Apex Coating (EA) Ltd
+          </p>
+          <h1 className="display text-4xl md:text-6xl font-semibold leading-[1.05] mb-6">
+            Coatings built for East Africa's climate — and homes built to last.
+          </h1>
+          <p className="text-lg max-w-xl mb-10" style={{ color: t.inkSoft }}>
+            Manufacturers of high-quality decorative and industrial coatings, adhesives and
+            related products, based in Nairobi's Industrial Area and serving customers across
+            East Africa.
+          </p>
+          <div className="flex gap-4">
+            <button
+              onClick={() => scrollTo("colors")}
+              className="px-6 py-3 rounded-lg font-semibold text-sm"
+              style={{ background: t.accent, color: t.sidebar }}
+            >
+              Explore Colours
+            </button>
+            <button
+              onClick={() => scrollTo("products")}
+              className="px-6 py-3 rounded-lg font-semibold text-sm border"
+              style={{ borderColor: t.border, color: t.ink }}
+            >
+              View Products
+            </button>
+          </div>
+
+          <div className="grid grid-cols-3 gap-6 mt-16 max-w-lg">
+            {[
+              ["3", "Product lines"],
+              ["100+", "Colour shades"],
+              ["EA", "Regional reach"],
+            ].map(([n, label]) => (
+              <div key={label}>
+                <p className="display text-2xl font-semibold">{n}</p>
+                <p className="text-xs mt-1" style={{ color: t.inkSoft }}>
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* COLOURS */}
+        <section ref={colorsRef} data-section="colors" className="min-h-screen px-8 md:px-16 py-20">
+          <p className="text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: t.accent }}>
+            Colour Centre
+          </p>
+          <h2 className="display text-3xl md:text-4xl font-semibold mb-3">Pick a family, find your shade</h2>
+          <p className="max-w-xl mb-10" style={{ color: t.inkSoft }}>
+            Tap a colour family to see its full range. Add up to five shades to your mix tray to
+            preview a blend and see matching products and prices.
+          </p>
+
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-8">
+            {GROUPS.map((g) => (
+              <button
+                key={g.id}
+                onClick={() => setOpenGroup(openGroup === g.id ? null : g.id)}
+                className="rounded-xl overflow-hidden border-2 text-left transition-all"
+                style={{
+                  borderColor: openGroup === g.id ? t.accent : "transparent",
+                  boxShadow: openGroup === g.id ? "0 8px 20px rgba(0,0,0,0.08)" : "none",
+                }}
+              >
+                <div className="h-16" style={{ backgroundColor: g.swatch }} />
+                <div style={{ background: t.card }} className="px-3 py-2">
+                  <p className="text-sm font-semibold">{g.label}</p>
+                  <p className="text-xs" style={{ color: t.inkSoft }}>
+                    {g.shades.length} shades
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {activeGroup && (
+            <div style={{ background: t.card, borderColor: t.border }} className="rounded-2xl border p-6 mb-8">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="display text-lg font-semibold">{activeGroup.label} shades</h3>
+                <button onClick={() => setOpenGroup(null)} style={{ color: t.inkSoft }}>
+                  <X size={20} />
+                </button>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {activeGroup.shades.map((s) => {
+                  const picked = picks.some((p) => p.name === s.name);
+                  const disabled = !picked && isFull;
+                  return (
+                    <div key={s.name} className="rounded-lg border overflow-hidden" style={{ borderColor: t.border }}>
+                      <div className="h-16" style={{ backgroundColor: s.hex }} />
+                      <div className="px-3 py-2">
+                        <p className="text-sm font-medium">{s.name}</p>
+                        <button
+                          onClick={() =>
+                            picked ? removeShade(s.name) : addShade(s, activeGroup.id, activeGroup.product)
+                          }
+                          disabled={disabled}
+                          className="mt-1.5 w-full text-xs font-semibold rounded-md py-1.5 flex items-center justify-center gap-1"
+                          style={{
+                            background: picked ? t.accent : disabled ? t.border : t.accentSoft,
+                            color: picked ? t.sidebar : disabled ? t.inkSoft : t.accent,
+                          }}
+                        >
+                          {picked ? (
+                            <>
+                              <Check size={13} /> Added
+                            </>
+                          ) : (
+                            <>
+                              <Plus size={13} /> Add to mix
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Mix tray */}
+          <div style={{ background: t.card, borderColor: t.border }} className="rounded-2xl border p-6">
+            <div className="flex items-center gap-4 mb-4">
+              <div
+                className="w-14 h-14 rounded-full border-4 shrink-0"
+                style={{ backgroundColor: picks.length ? blended : t.bgAlt, borderColor: t.bg }}
+              />
+              <div className="flex-1 overflow-x-auto">
+                <div className="flex gap-2">
+                  {picks.length === 0 && (
+                    <p className="text-sm py-2" style={{ color: t.inkSoft }}>
+                      Your mix tray is empty — add up to 5 shades above.
+                    </p>
+                  )}
+                  {picks.map((p) => (
+                    <div key={p.name} className="flex items-center gap-2 rounded-full pl-1 pr-2 py-1 shrink-0 border" style={{ borderColor: t.border }}>
+                      <span className="w-6 h-6 rounded-full block" style={{ backgroundColor: p.hex }} />
+                      <span className="text-xs font-medium whitespace-nowrap">{p.name}</span>
+                      <button onClick={() => removeShade(p.name)} style={{ color: t.inkSoft }}>
+                        <X size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <span className="text-xs font-semibold shrink-0" style={{ color: t.inkSoft }}>
+                {picks.length}/5
+              </span>
+            </div>
+
+            {picks.length > 0 && (
+              <div className="border-t pt-3 mb-4" style={{ borderColor: t.border }}>
+                {picks.map((p) => (
+                  <div key={p.name} className="flex items-center justify-between gap-3 py-1.5 text-sm">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="w-4 h-4 rounded-full shrink-0" style={{ backgroundColor: p.hex }} />
+                      <span className="font-medium shrink-0">{p.name}</span>
+                      <span className="text-xs truncate" style={{ color: t.inkSoft }}>
+                        {PRODUCTS[p.product].name}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 shrink-0">
+                      <select
+                        value={p.size}
+                        onChange={(e) => setSize(p.name, e.target.value)}
+                        className="text-xs rounded px-1.5 py-1 border"
+                        style={{ borderColor: t.border, background: t.bg, color: t.ink }}
+                      >
+                        {SIZES.map((s) => (
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="font-semibold w-24 text-right">{fmt(PRODUCTS[p.product].prices[p.size])}</span>
+                    </div>
+                  </div>
+                ))}
+                <div className="flex items-center justify-between pt-2 mt-1 border-t" style={{ borderColor: t.border }}>
+                  <span className="text-xs" style={{ color: t.inkSoft }}>
+                    Counter price list — effective 1 July 2026
+                  </span>
+                  <span className="font-bold">Total: {fmt(total)}</span>
+                </div>
+              </div>
+            )}
+
+            <div className="flex items-center gap-3">
+              <a
+                href={picks.length ? `mailto:apex@apexcoating.com?subject=Colour%20quote%20request&body=${quoteBody}` : undefined}
+                className="flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2"
+                style={{
+                  background: picks.length ? t.accent : t.border,
+                  color: picks.length ? t.sidebar : t.inkSoft,
+                  pointerEvents: picks.length ? "auto" : "none",
+                }}
+              >
+                <Mail size={15} /> Request Quote
+              </a>
+              <a
+                href="tel:+254722252134"
+                className="flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2 border"
+                style={{ borderColor: t.border }}
+              >
+                <Phone size={15} /> Call Us
+              </a>
+              {picks.length > 0 && (
+                <button onClick={() => setPicks([])} className="text-sm ml-auto" style={{ color: t.inkSoft }}>
+                  Clear all
+                </button>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* PRODUCTS */}
+        <section ref={productsRef} data-section="products" className="min-h-screen px-8 md:px-16 py-20">
+          <p className="text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: t.accent }}>
+            Product Range
+          </p>
+          <h2 className="display text-3xl md:text-4xl font-semibold mb-3">Four coatings, built for the job</h2>
+          <p className="max-w-xl mb-10" style={{ color: t.inkSoft }}>
+            A sample of our range — the full catalogue includes thinners, adhesives and an
+            industrial line. Prices shown are from the counter price list effective 1 July 2026.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {Object.entries(PRODUCTS).map(([key, p]) => (
+              <ProductCard key={key} p={p} t={t} />
+            ))}
+          </div>
+        </section>
+
+        {/* CONTACT */}
+        <section ref={contactRef} data-section="contact" className="px-8 md:px-16 py-20">
+          <p className="text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: t.accent }}>
+            Get In Touch
+          </p>
+          <h2 className="display text-3xl md:text-4xl font-semibold mb-10">Questions, quotes, feedback — talk to us</h2>
+
+          <div className="grid md:grid-cols-2 gap-10">
+            <div>
+              <div className="space-y-4 mb-8">
+                <div className="flex items-start gap-3">
+                  <MapPin size={18} className="mt-0.5 shrink-0" style={{ color: t.accent }} />
+                  <p style={{ color: t.inkSoft }}>
+                    Lusingeti Road, Off Likoni Road, Industrial Area, Nairobi
+                    <br />
+                    P.O. Box 78108–00507, Nairobi, Kenya
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Phone size={18} style={{ color: t.accent }} />
+                  <p style={{ color: t.inkSoft }}>0722 252134 / 0728 785111</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Mail size={18} style={{ color: t.accent }} />
+                  <p style={{ color: t.inkSoft }}>apex@apexcoating.com</p>
+                </div>
+              </div>
+              <div style={{ background: t.card, borderColor: t.border }} className="rounded-xl border p-5">
+                <h3 className="display font-semibold mb-2">Our history</h3>
+                <p className="text-sm" style={{ color: t.inkSoft }}>
+                  Apex Coating (EA) Ltd manufactures high-quality decorative and industrial
+                  coatings and related products from our Nairobi Industrial Area plant, supplying
+                  dealers and customers across Kenya and the wider East African region.
+                </p>
+              </div>
+            </div>
+
+            <div style={{ background: t.card, borderColor: t.border }} className="rounded-xl border p-6">
+              <h3 className="display font-semibold mb-4">Send feedback</h3>
+              <input
+                placeholder="Your name"
+                value={feedback.name}
+                onChange={(e) => setFeedback({ ...feedback, name: e.target.value })}
+                className="w-full mb-3 px-3 py-2 rounded-lg border text-sm"
+                style={{ borderColor: t.border, background: t.bg, color: t.ink }}
+              />
+              <textarea
+                placeholder="Your message"
+                rows={5}
+                value={feedback.message}
+                onChange={(e) => setFeedback({ ...feedback, message: e.target.value })}
+                className="w-full mb-3 px-3 py-2 rounded-lg border text-sm resize-none"
+                style={{ borderColor: t.border, background: t.bg, color: t.ink }}
+              />
+              <a
+                href={feedback.message ? `mailto:apex@apexcoating.com?subject=Website%20Feedback&body=${feedbackBody}` : undefined}
+                className="inline-flex items-center gap-2 text-sm font-semibold rounded-lg px-4 py-2"
+                style={{
+                  background: feedback.message ? t.accent : t.border,
+                  color: feedback.message ? t.sidebar : t.inkSoft,
+                  pointerEvents: feedback.message ? "auto" : "none",
+                }}
+              >
+                <Mail size={15} /> Send via Email
+              </a>
+            </div>
+          </div>
+
+          <div className="text-center mt-16 pt-8 border-t text-xs" style={{ borderColor: t.border, color: t.inkSoft }}>
+            © 2026 Apex Coating (EA) Ltd. All rights reserved.
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+function ProductCard({ p, t }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ background: t.card, borderColor: t.border }} className="rounded-xl border p-6">
+      <div className="flex items-start justify-between mb-3">
+        <div>
+          <h3 className="display font-semibold text-lg">{p.name}</h3>
+          <span className="inline-block text-xs font-semibold px-2 py-0.5 rounded-full mt-1" style={{ background: t.accentSoft, color: t.accent }}>
+            {p.tag}
+          </span>
+        </div>
+      </div>
+      <p className="text-sm mb-4" style={{ color: t.inkSoft }}>
+        {p.blurb}
+      </p>
+      <div className="grid grid-cols-4 gap-2 mb-4">
+        {Object.entries(p.prices).map(([size, price]) => (
+          <div key={size} className="text-center rounded-lg py-2" style={{ background: t.bgAlt }}>
+            <p className="text-xs" style={{ color: t.inkSoft }}>
+              {size}
+            </p>
+            <p className="text-sm font-bold">{fmt(price)}</p>
+          </div>
+        ))}
+      </div>
+      <button onClick={() => setOpen(!open)} className="flex items-center gap-1 text-sm font-semibold" style={{ color: t.accent }}>
+        Application &amp; surface prep
+        <ChevronDown size={14} style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }} />
+      </button>
+      {open && (
+        <div className="mt-3 pt-3 border-t text-sm space-y-2" style={{ borderColor: t.border, color: t.inkSoft }}>
+          <p>
+            <span className="font-semibold" style={{ color: t.ink }}>
+              Surface prep:{" "}
+            </span>
+            {p.prep}
+          </p>
+          <p>
+            <span className="font-semibold" style={{ color: t.ink }}>
+              Application:{" "}
+            </span>
+            {p.application}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
