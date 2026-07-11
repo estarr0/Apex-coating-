@@ -243,6 +243,9 @@ let openGroupId = null;
 let mixQty = 1;
 let activeCategory = "All";
 const cardQty = {}; // per-product-card quantity state, keyed by product id
+const cardColor = {}; // per-product-card chosen shade, keyed by product id: {name, hex}
+let colorPickerTargetId = null;
+let colorPickerOpenGroup = null;
 
 /* ================= HELPERS ================= */
 
@@ -526,6 +529,16 @@ function productCardHtml(p) {
   const hasPrices = priceEntries.length > 0;
   const availableSizes = SIZE_ORDER.filter(s => p.prices[s] !== undefined);
   if (cardQty[p.id] === undefined) cardQty[p.id] = 1;
+  const chosen = cardColor[p.id];
+
+  const colorButtonHtml = p.tintable ? `
+    <button class="choose-color-btn ${chosen ? "" : "unset"}" data-choose-color="${p.id}">
+      <span class="swatch-dot" style="${chosen ? `background:${chosen.hex}` : ""}"></span>
+      ${chosen ? `Colour: ${chosen.name}` : "Choose a colour"}
+    </button>
+  ` : "";
+
+  const canAdd = hasPrices && (!p.tintable || chosen);
 
   return `
     <div class="product-card">
@@ -541,6 +554,7 @@ function productCardHtml(p) {
         <div class="price-grid">
           ${priceEntries.map(([size, price]) => `<div class="price-pill"><div class="size">${size}</div><div class="price">${fmt(price)}</div></div>`).join("")}
         </div>
+        ${colorButtonHtml}
         <div class="buy-row">
           <select class="buy-size" data-buy-size="${p.id}">
             ${availableSizes.map(s => `<option value="${s}">${s}</option>`).join("")}
@@ -550,8 +564,9 @@ function productCardHtml(p) {
             <span id="buyQty-${p.id}">${cardQty[p.id]}</span>
             <button data-buy-plus="${p.id}" type="button">+</button>
           </div>
-          <button class="btn btn-primary btn-sm" data-buy-add="${p.id}">Add to cart</button>
+          <button class="btn btn-primary btn-sm" data-buy-add="${p.id}" ${canAdd ? "" : "disabled"}>Add to cart</button>
         </div>
+        ${p.tintable && !chosen ? `<p class="feedback-note">Pick a colour above to add this to your cart.</p>` : ""}
       ` : `
         <p class="contact-price">Contact us for pricing</p>
         <a class="btn btn-outline btn-sm btn-block" href="mailto:apex@apexcoating.com?subject=Price%20enquiry:%20${encodeURIComponent(p.name)}">Enquire</a>
@@ -592,6 +607,9 @@ function wireProductCardEvents() {
   productGrid.querySelectorAll("[data-mix-product]").forEach(btn => {
     btn.addEventListener("click", () => selectProductForMixer(btn.dataset.mixProduct));
   });
+  productGrid.querySelectorAll("[data-choose-color]").forEach(btn => {
+    btn.addEventListener("click", () => openColorPicker(btn.dataset.chooseColor));
+  });
   productGrid.querySelectorAll("[data-buy-minus]").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = btn.dataset.buyMinus;
@@ -613,19 +631,93 @@ function wireProductCardEvents() {
       const sizeSel = productGrid.querySelector(`[data-buy-size="${id}"]`);
       const size = sizeSel.value;
       const qty = cardQty[id] || 1;
+      const color = cardColor[id] || null;
       cart.push({
         id: Date.now(),
         type: "product",
         productName: p.name,
         image: p.image,
+        color: color ? color.name : null,
+        colorHex: color ? color.hex : null,
         size, qty,
         unitPrice: p.prices[size],
       });
       saveCart();
+      // reset this card's colour choice so the next purchase starts fresh
+      delete cardColor[id];
+      renderProductCards();
       renderCart();
       flashCart();
     });
   });
+}
+
+/* ================= COLOUR PICKER MODAL ================= */
+
+const colorPickerModal = document.getElementById("colorPickerModal");
+const colorPickerBody = document.getElementById("colorPickerBody");
+const colorPickerClose = document.getElementById("colorPickerClose");
+
+function openColorPicker(productId) {
+  colorPickerTargetId = productId;
+  colorPickerOpenGroup = null;
+  colorPickerModal.hidden = false;
+  renderColorPickerModal();
+}
+function closeColorPicker() {
+  colorPickerModal.hidden = true;
+  colorPickerTargetId = null;
+}
+colorPickerClose.addEventListener("click", closeColorPicker);
+colorPickerModal.addEventListener("click", (e) => {
+  if (e.target === colorPickerModal) closeColorPicker();
+});
+
+function renderColorPickerModal() {
+  if (!colorPickerOpenGroup) {
+    colorPickerBody.innerHTML = `
+      <p class="section-sub" style="margin-bottom:16px;">Pick a colour family, then choose your shade.</p>
+      <div class="picker-group-grid">
+        ${GROUPS.map(g => `
+          <button class="picker-group-tile" data-picker-group="${g.id}">
+            <div class="swatch" style="background:${g.swatch}"></div>
+            <div class="label">${g.label}</div>
+          </button>
+        `).join("")}
+      </div>
+    `;
+    colorPickerBody.querySelectorAll("[data-picker-group]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        colorPickerOpenGroup = btn.dataset.pickerGroup;
+        renderColorPickerModal();
+      });
+    });
+  } else {
+    const group = GROUPS.find(g => g.id === colorPickerOpenGroup);
+    colorPickerBody.innerHTML = `
+      <div class="picker-crumb" id="pickerBack">← All colour families</div>
+      <div class="picker-shade-grid">
+        ${group.shades.map(s => `
+          <button class="picker-shade-tile" data-picker-shade="${s.name}">
+            <div class="swatch" style="background:${s.hex}"></div>
+            <div class="label">${s.name}</div>
+          </button>
+        `).join("")}
+      </div>
+    `;
+    colorPickerBody.querySelector("#pickerBack").addEventListener("click", () => {
+      colorPickerOpenGroup = null;
+      renderColorPickerModal();
+    });
+    colorPickerBody.querySelectorAll("[data-picker-shade]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const shade = group.shades.find(s => s.name === btn.dataset.pickerShade);
+        cardColor[colorPickerTargetId] = shade;
+        closeColorPicker();
+        renderProductCards();
+      });
+    });
+  }
 }
 
 /* ================= CART ================= */
@@ -650,17 +742,19 @@ function renderCart() {
     cartItemsEl.innerHTML = cart.map(item => {
       const visual = item.type === "mix"
         ? `<span class="dot" style="background:${item.blend}"></span>`
-        : item.image
-          ? `<img class="cart-thumb" src="${item.image}" alt="${item.productName}" />`
-          : `<span class="dot cart-thumb-placeholder">🪣</span>`;
+        : item.colorHex
+          ? `<span class="dot" style="background:${item.colorHex}"></span>`
+          : item.image
+            ? `<img class="cart-thumb" src="${item.image}" alt="${item.productName}" />`
+            : `<span class="dot cart-thumb-placeholder">🪣</span>`;
       const meta = item.type === "mix"
         ? `${item.productName} · closest to ${item.matchedName} · mixed from ${item.shadeNames.join(", ")} · ${item.size} × ${item.qty}`
-        : `${item.productName} · ${item.size} × ${item.qty}`;
+        : `${item.productName}${item.color ? " · " + item.color : ""} · ${item.size} × ${item.qty}`;
       return `
         <div class="cart-item">
           ${visual}
           <div class="cart-item-info">
-            <p class="name">${item.productName}</p>
+            <p class="name">${item.productName}${item.color ? ` — ${item.color}` : ""}</p>
             <p class="meta">${meta}</p>
             <div class="row">
               <span class="price">${fmt(item.unitPrice * item.qty)}</span>
@@ -683,7 +777,7 @@ function renderCart() {
 
   const lines = cart.map(i => i.type === "mix"
     ? `- ${i.productName}, ${i.size} × ${i.qty} — custom mix (closest to ${i.matchedName}, blended from ${i.shadeNames.join(", ")}) — ${fmt(i.unitPrice * i.qty)}`
-    : `- ${i.productName}, ${i.size} × ${i.qty} — ${fmt(i.unitPrice * i.qty)}`
+    : `- ${i.productName}${i.color ? " — " + i.color : ""}, ${i.size} × ${i.qty} — ${fmt(i.unitPrice * i.qty)}`
   );
   const body = encodeURIComponent(
     "Hello Apex Coating,\n\nI'd like a quote for the following:\n" + lines.join("\n") +
