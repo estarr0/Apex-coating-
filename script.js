@@ -726,6 +726,8 @@ const cartBadge = document.getElementById("cartBadge");
 const cartItemsEl = document.getElementById("cartItems");
 const cartTotalEl = document.getElementById("cartTotal");
 const cartQuoteBtn = document.getElementById("cartQuoteBtn");
+const cartWhatsappBtn = document.getElementById("cartWhatsappBtn");
+const APEX_WHATSAPP_NUMBER = "254722252134"; // placeholder — swap for the real WhatsApp business number
 
 function flashCart() {
   cartBadge.style.transform = "scale(1.3)";
@@ -779,11 +781,23 @@ function renderCart() {
     ? `- ${i.productName}, ${i.size} × ${i.qty} — custom mix (closest to ${i.matchedName}, blended from ${i.shadeNames.join(", ")}) — ${fmt(i.unitPrice * i.qty)}`
     : `- ${i.productName}${i.color ? " — " + i.color : ""}, ${i.size} × ${i.qty} — ${fmt(i.unitPrice * i.qty)}`
   );
-  const body = encodeURIComponent(
+
+  // Email quote
+  const emailBody = encodeURIComponent(
     "Hello Apex Coating,\n\nI'd like a quote for the following:\n" + lines.join("\n") +
     `\n\nEstimated total: ${fmt(total)}\n\nThank you.`
   );
-  cartQuoteBtn.href = cart.length ? `mailto:apex@apexcoating.com?subject=Quote%20request&body=${body}` : "#";
+  cartQuoteBtn.href = cart.length ? `mailto:apex@apexcoating.com?subject=Quote%20request&body=${emailBody}` : "#";
+
+  // WhatsApp order
+  const waText = encodeURIComponent(
+    "Hi Apex Coating! I'd like to order:\n\n" + lines.join("\n") +
+    `\n\nTotal: ${fmt(total)}`
+  );
+  cartWhatsappBtn.href = cart.length
+    ? `https://wa.me/${APEX_WHATSAPP_NUMBER}?text=${waText}`
+    : "#";
+  cartWhatsappBtn.classList.toggle("btn-disabled", cart.length === 0);
 }
 
 /* ================= FEEDBACK FORM ================= */
