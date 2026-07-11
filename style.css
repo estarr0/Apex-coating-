@@ -574,7 +574,69 @@ main { margin-left: 76px; }
   .cart-page { padding: 4px 18px; }
 }
 
-/* ---------------- CART SECTION ---------------- */
+/* ---------------- COLOUR PICKER MODAL ---------------- */
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 80;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-box {
+  background: var(--card);
+  border-radius: 16px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.modal-header h3 { font-size: 18px; font-weight: 600; }
+.modal-body { padding: 20px 24px; overflow-y: auto; }
+
+.picker-crumb { display: flex; align-items: center; gap: 6px; margin-bottom: 16px; font-size: 13px; color: var(--accent); cursor: pointer; font-weight: 600; }
+
+.picker-group-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (max-width: 640px) { .picker-group-grid { grid-template-columns: repeat(2, 1fr); } }
+.picker-group-tile { border-radius: 10px; overflow: hidden; border: none; cursor: pointer; padding: 0; }
+.picker-group-tile .swatch { height: 56px; }
+.picker-group-tile .label { background: var(--bg-alt); padding: 8px; font-size: 12px; font-weight: 600; }
+
+.picker-shade-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (max-width: 640px) { .picker-shade-grid { grid-template-columns: repeat(2, 1fr); } }
+.picker-shade-tile { border-radius: 10px; overflow: hidden; border: 2px solid transparent; cursor: pointer; padding: 0; text-align: left; background: var(--bg-alt); }
+.picker-shade-tile:hover { border-color: var(--accent); }
+.picker-shade-tile .swatch { height: 56px; }
+.picker-shade-tile .label { padding: 8px; font-size: 12px; font-weight: 600; }
+
+.choose-color-btn {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 12px; font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.choose-color-btn .swatch-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+}
+.choose-color-btn.unset { color: var(--ink-soft); border-style: dashed; }
 
 .cart-page {
   background: var(--card);
