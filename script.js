@@ -1,4 +1,4 @@
-/* ================= DATA ================= */
+/* ================= COLOUR DATA ================= */
 
 const GROUPS = [
   { id: "neutral", label: "Whites & Neutrals", swatch: "#F2ECDA", shades: [
@@ -73,69 +73,176 @@ const GROUPS = [
   ]},
 ];
 
-// Tintable base products available in the mixer. Sizes/prices from the
-// counter price list effective 1 July 2026 — confirm any marked approx.
-const PRODUCTS = {
-  matt: { name: "Acrylic Emulsion (Vinyl Matt)", tag: "Exterior",
+const ALL_SHADES = GROUPS.flatMap(g => g.shades.map(s => ({ ...s, group: g.label })));
+
+/* ================= CATALOGUE (single source of truth) ================= */
+// tintable: true  -> appears in the colour mixer's product dropdown
+// prices: {} means no confirmed price yet -> card shows "Contact us"
+
+const CATALOGUE = [
+  { id: "matt", name: "Acrylic Emulsion (Vinyl Matt)", tag: "Exterior", category: "Emulsion & Water-Based Paints", tintable: true, image: "images/floating/acrylic-matt-white-hq.png",
     blurb: "Superior architectural paint on durable acrylic resin. Alkali-resistant, built for heavy rain, dry seasons and strong sun.",
     prep: "Surfaces clean, dry, free of oil, grease, wax or dust. Remove old flaky material. No priming needed on new smooth surfaces.",
     application: "Soft paintbrush or roller. One or two coats depending on porosity. Clean equipment with tap water immediately after use.",
     prices: { "1/2L": 260, "1L": 550, "4L": 1900, "10L": 4700, "20L": 8600 } },
-  weathershieldSilicon: { name: "Weathershield (Silicone Based)", tag: "Premium exterior",
+  { id: "weathershieldSilicon", name: "Weathershield (Silicone Based)", tag: "Premium exterior", category: "Emulsion & Water-Based Paints", tintable: true, image: "images/floating/silicone-weathershield-babypink-hq.png",
     blurb: "Silicone-based formulation for maximum exterior weather resistance.",
     prep: "Surfaces clean, dry, free from contaminants and loose material. New surfaces need an alkali-resisting undercoat first.",
     application: "Brush, roller or spray. Two coats recommended. Allow full cure time between coats.",
     prices: { "1/2L": 350, "1L": 650, "4L": 2100, "10L": 5000, "20L": 10000 } },
-  weathershield: { name: "Weathershield", tag: "Exterior",
+  { id: "weathershield", name: "Weathershield", tag: "Exterior", category: "Emulsion & Water-Based Paints", tintable: true, image: null,
     blurb: "Heavy-duty exterior protection for facades exposed to harsh weather.",
     prep: "Surfaces clean, dry, free from contaminants and loose material. New surfaces need an alkali-resisting undercoat first.",
     application: "Brush, roller or spray. Two coats recommended for full protection.",
     prices: { "4L": 2000, "10L": 5000, "20L": 9500 } },
-  silk: { name: "Vinyl Wallsheen (Silk)", tag: "Interior",
+  { id: "silk", name: "Vinyl Wallsheen (Silk)", tag: "Interior", category: "Emulsion & Water-Based Paints", tintable: true, image: "images/floating/silk-vinyl-white-hq.png",
     blurb: "High-performance interior paint, cool satin finish, high wet-scrub resistance.",
     prep: "Surfaces clean, free from grease, oil, wax, moisture and loose material. New surfaces need one coat of alkali-resisting undercoat first.",
     application: "Soft paintbrush, roller or spray. At least two coats after the undercoat. Clean equipment with tap water immediately.",
     prices: { "1/2L": 350, "1L": 650, "4L": 2100, "10L": 5500, "20L": 10000 } },
-  supergloss: { name: "Supergloss", tag: "High gloss",
+  { id: "supergloss", name: "Supergloss", tag: "High gloss", category: "Oil-Based Paints", tintable: true, image: "images/floating/supergloss-white-hq.png",
     blurb: "Oil-modified alkyd enamel. Long-lasting, easy-clean coat for wood, metal, asbestos and concrete.",
     prep: "Clean, dry surfaces free of oil, grease, wax and old flaky paint. Fresh surfaces need a primer undercoat first.",
     application: "Soft brush, air spray or dipping. One or two coats over the undercoat. Clean equipment with terpentine or white spirit.",
     prices: { "1/2L": 330, "1L": 650, "4L": 2250, "10L": 5500, "20L": 10500 } },
-  texstar: { name: "Texstar Emulsion", tag: "Economy interior",
+  { id: "texstar", name: "Texstar Emulsion", tag: "Economy interior", category: "Economy Range", tintable: true, image: "images/floating/texstar-coat-white-hq.png",
     blurb: "Everyday-value emulsion for interior walls.",
     prep: "Surfaces clean, dry and free from dust or flaking material.",
     application: "Brush or roller. One to two coats depending on porosity.",
     prices: { "1/4L": 150, "1/2L": 250, "1L": 450, "4L": 550, "10L": 1300, "20L": 2200 } },
-  plastic: { name: "Plastic Emulsion", tag: "Economy interior",
+  { id: "plastic", name: "Plastic Emulsion", tag: "Economy interior", category: "Economy Range", tintable: true, image: "images/floating/plastic-matt-white-hq.png",
     blurb: "Economical plastic-based emulsion for interior walls and ceilings.",
     prep: "Surfaces clean, dry and free from dust or flaking material.",
     application: "Brush or roller. One to two coats depending on porosity.",
     prices: { "1/4L": 200, "1/2L": 360, "1L": 630, "4L": 390, "10L": 850, "20L": 1500 } },
-  glossEnamel: { name: "Gloss Enamel", tag: "Standard gloss",
+  { id: "glossEnamel", name: "Gloss Enamel", tag: "Standard gloss", category: "Oil-Based Paints", tintable: true, image: "images/floating/gloss-enamel-two-sizes.png",
     blurb: "Standard alkyd gloss enamel for wood and metal.",
     prep: "Clean, dry surfaces free of oil, grease and flaking material. Fresh surfaces need a primer undercoat.",
     application: "Brush or spray. One to two coats over undercoat. Clean with white spirit.",
     prices: { "1/4L": 90, "1/2L": 160, "4L": 900, "20L": 4500 } },
-  glossTexstar: { name: "Gloss Texstar", tag: "Economy gloss",
+  { id: "glossTexstar", name: "Gloss Texstar", tag: "Economy gloss", category: "Economy Range", tintable: true, image: null,
     blurb: "Economy gloss finish for wood and metal surfaces.",
     prep: "Clean, dry surfaces free of oil, grease and flaking material.",
     application: "Brush or spray. One to two coats. Clean with white spirit.",
     prices: { "1/4L": 100, "1/2L": 180, "1L": 350, "4L": 1250, "20L": 4850 } },
-  covermatt: { name: "Covermatt", tag: "Economy interior",
+  { id: "covermatt", name: "Covermatt", tag: "Economy interior", category: "Economy Range", tintable: true, image: null,
     blurb: "High-opacity economy matt emulsion for interior walls.",
     prep: "Surfaces clean, dry and free from dust or flaking material.",
     application: "Brush or roller. One to two coats.",
     prices: { "1/2L": 200, "1L": 380, "4L": 1030, "10L": 2300, "20L": 4000 } },
-};
 
+  { id: "varnish", name: "Synthetic Varnish", tag: "Clear finish", category: "Wood Finishes", tintable: false, image: "images/floating/synthetic-varnish.png",
+    blurb: "Clear protective finish for wood surfaces, interior and exterior.",
+    prep: "Wood surfaces sanded smooth, clean and dry.",
+    application: "Soft brush. Apply thin, even coats, allowing full drying time between coats.",
+    prices: { "1/4L": 95, "1/2L": 180, "1L": 360, "4L": 2000, "20L": 6000 } },
+  { id: "ncWoodFinish", name: "NC Wood Finish (Cherry, Peach)", tag: "Lacquer", category: "Wood Finishes", tintable: false, image: "images/floating/nc-wood-finish-lacquer.png",
+    blurb: "Nitrocellulose lacquer wood finish for a smooth, durable clear coat.",
+    prep: "Wood surfaces sanded smooth, clean, dry and dust-free.",
+    application: "Spray or brush. Thin with Apex Standard Thinner for best results.",
+    prices: { "1/4L": 200, "1/2L": 400, "4L": 2400, "20L": 10000 } },
+
+  { id: "turpentine", name: "Turpentine", tag: "Thinner", category: "Thinners", tintable: false, image: "images/floating/turpentine.png",
+    blurb: "General-purpose thinner for oil-based paints and brush cleaning.",
+    prep: "N/A — thinning and cleaning agent.",
+    application: "Add gradually to paint until desired consistency is reached.",
+    prices: { "1/2L": 180, "1L": 300, "4L": 1200, "10L": 2700, "20L": 4000 } },
+  { id: "stdThinner", name: "Standard Thinner", tag: "Thinner", category: "Thinners", tintable: false, image: "images/floating/thinner-green.png",
+    blurb: "All-purpose thinner for standard enamel and gloss paints.",
+    prep: "N/A — thinning and cleaning agent.",
+    application: "Add gradually to paint until desired consistency is reached.",
+    prices: { "1/2L": 180, "1L": 270, "4L": 1300, "20L": 5000 } },
+  { id: "whiteSpirit", name: "Special White Spirit", tag: "Thinner", category: "Thinners", tintable: false, image: "images/floating/special-white-spirit-1.png",
+    blurb: "Petroleum-based solvent for thinning and equipment cleaning.",
+    prep: "N/A — thinning and cleaning agent.",
+    application: "Add gradually to paint until desired consistency is reached.",
+    prices: { "1/2L": 200, "1L": 350, "4L": 1250, "10L": 1400, "20L": 4200 } },
+
+  { id: "serafricGlue", name: "Serafric Professional Wood Glue", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-professional-wood-glue-hq.png",
+    blurb: "Professional-grade white wood glue for furniture and joinery.",
+    prep: "Surfaces clean, dry and free of dust or old adhesive residue.",
+    application: "Apply evenly with a brush or spreader. Clamp until set.",
+    prices: {} },
+  { id: "serafric101", name: "Serafric 101 Contact Cement", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-101-contact-cement.png",
+    blurb: "High neoprene contact cement for leather, PVC, foamed polyurethane, mattresses and upholstery jobs. 5 litres.",
+    prep: "Surfaces clean, dry and free of dust or grease.",
+    application: "Apply by brush to both surfaces, allow to become touch-dry, then bond. Not to be used near naked flame — highly flammable.",
+    prices: {} },
+  { id: "serafric103", name: "Serafric 103 Contact Cement", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-103-contact-cement.png",
+    blurb: "High neoprene contact cement for leather, PVC, foamed polyurethane, mattresses and upholstery. 5 litres.",
+    prep: "Surfaces clean, dry and free of dust or grease.",
+    application: "Apply by brush to both surfaces, allow to become touch-dry, then bond firmly.",
+    prices: {} },
+  { id: "serafric202", name: "Serafric 202 PVC Adhesive", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-202-pvc-adhesive.png",
+    blurb: "PVC adhesive for PVC pipes and fittings. 1.4 litres.",
+    prep: "Surfaces clean, dry and free of dust or moisture.",
+    application: "Apply to both pipe and fitting surfaces, join immediately, hold firmly until set.",
+    prices: {} },
+
+  { id: "floorPaintRed", name: "Gloss Enamel Floor Paint (Red)", tag: "Floor paint", category: "Oil-Based Paints", tintable: false, image: "images/floating/gloss-enamel-floor-paint-red.png",
+    blurb: "Durable gloss enamel floor paint for concrete and cement floors, red oxide finish.",
+    prep: "Surfaces clean, dry, free of oil, grease, dust and loose material. New concrete should be fully cured.",
+    application: "Brush or roller. One to two coats. Clean equipment with white spirit.",
+    prices: { "20L": 4700 } },
+
+  { id: "epoxy2pack", name: "2-Pack Epoxy Paint (Main Colours)", tag: "Industrial", category: "Industrial Range", tintable: false, image: null,
+    blurb: "Two-component epoxy coating for heavy-duty industrial floors and surfaces.",
+    prep: "Surfaces clean, dry, free of oil, grease and laitance. Concrete should be fully cured.",
+    application: "Mix base and hardener per ratio. Apply by brush, roller or spray within pot life.",
+    prices: { "20L": 10000 } },
+  { id: "epoxyHardener", name: "Epoxy Hardener", tag: "Industrial", category: "Industrial Range", tintable: false, image: null,
+    blurb: "Curing agent for Apex 2-pack epoxy paint systems.",
+    prep: "N/A — mixing component.",
+    application: "Mix with epoxy base at the specified ratio immediately before use.",
+    prices: { "20L": 2700 } },
+  { id: "qadBlack", name: "QAD Black / Matt Black", tag: "Industrial", category: "Industrial Range", tintable: false, image: null,
+    blurb: "Quick air-drying black enamel for industrial and structural steelwork.",
+    prep: "Surfaces clean, dry and free of rust, oil and grease.",
+    application: "Brush or spray. Quick-drying — recoat within a few hours.",
+    prices: { "20L": 10000 } },
+  { id: "qadAluminium", name: "QAD Aluminium", tag: "Industrial", category: "Industrial Range", tintable: false, image: null,
+    blurb: "Quick air-drying aluminium finish for metal and structural surfaces.",
+    prep: "Surfaces clean, dry and free of rust, oil and grease.",
+    application: "Brush or spray. Quick-drying — recoat within a few hours.",
+    prices: { "20L": 14500 } },
+  { id: "chlorinatedRubber", name: "Chlorinated Rubber Paint", tag: "Industrial", category: "Industrial Range", tintable: false, image: null,
+    blurb: "Chemical-resistant coating for swimming pools, tanks and industrial structures.",
+    prep: "Surfaces clean, dry, free of laitance, oil and grease.",
+    application: "Brush, roller or spray. Two coats recommended.",
+    prices: {} },
+  { id: "bituminousBlack", name: "Bituminous Black", tag: "Industrial", category: "Industrial Range", tintable: false, image: null,
+    blurb: "Protective bitumen-based black coating for waterproofing and corrosion protection.",
+    prep: "Surfaces clean, dry, and free of loose rust and scale.",
+    application: "Brush or roller. Apply generously in even coats.",
+    prices: { "20L": 6800 } },
+  { id: "fastDry", name: "Fast Dry White/Black", tag: "Industrial", category: "Industrial Range", tintable: false, image: null,
+    blurb: "Rapid-drying enamel for fast turnaround industrial jobs.",
+    prep: "Surfaces clean, dry and free of oil, grease and rust.",
+    application: "Brush or spray. Dries quickly — work in manageable sections.",
+    prices: { "20L": 9500 } },
+  { id: "fastDryAluminium", name: "Fast Dry Aluminium", tag: "Industrial", category: "Industrial Range", tintable: false, image: null,
+    blurb: "Rapid-drying aluminium industrial finish.",
+    prep: "Surfaces clean, dry and free of oil, grease and rust.",
+    application: "Brush or spray. Dries quickly — work in manageable sections.",
+    prices: { "20L": 9500 } },
+  { id: "roadMarking", name: "Road Marking Paint", tag: "Industrial", category: "Industrial Range", tintable: false, image: null,
+    blurb: "High-visibility, durable paint for road and pavement marking.",
+    prep: "Road surface clean, dry and free of dust, oil and loose debris.",
+    application: "Spray or brush per road-marking specification. Allow full cure before opening to traffic.",
+    prices: {} },
+];
+
+const CATEGORY_ORDER = ["Emulsion & Water-Based Paints", "Economy Range", "Oil-Based Paints", "Wood Finishes", "Thinners", "Adhesives", "Industrial Range"];
 const SIZE_ORDER = ["1/4L", "1/2L", "1L", "4L", "10L", "20L"];
 
 /* ================= STATE ================= */
 
-let picks = [];               // shades currently in the mixer
+let picks = [];
 let cart = JSON.parse(sessionStorage.getItem("apexCart") || "[]");
 let openGroupId = null;
-let qty = 1;
+let mixQty = 1;
+let activeCategory = "All";
+const cardQty = {}; // per-product-card quantity state, keyed by product id
 
 /* ================= HELPERS ================= */
 
@@ -154,8 +261,22 @@ function blendHexes(hexes) {
   }, [0,0,0]);
   return rgbToHex(sum.map(v => v / hexes.length));
 }
+function colorDistance(hexA, hexB) {
+  const [r1,g1,b1] = hexToRgb(hexA);
+  const [r2,g2,b2] = hexToRgb(hexB);
+  return Math.sqrt((r1-r2)**2 + (g1-g2)**2 + (b1-b2)**2);
+}
+function findNearestShade(hex) {
+  let best = null, bestDist = Infinity;
+  ALL_SHADES.forEach(s => {
+    const d = colorDistance(hex, s.hex);
+    if (d < bestDist) { bestDist = d; best = s; }
+  });
+  return best;
+}
 function fmt(n) { return "KES " + n.toLocaleString(); }
 function saveCart() { sessionStorage.setItem("apexCart", JSON.stringify(cart)); }
+function productById(id) { return CATALOGUE.find(p => p.id === id); }
 
 /* ================= NAV + THEME ================= */
 
@@ -172,14 +293,14 @@ document.querySelectorAll("[data-scroll]").forEach(btn => {
 });
 
 const sections = document.querySelectorAll(".section");
-const observer = new IntersectionObserver((entries) => {
+const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       navBtns.forEach(b => b.classList.toggle("active", b.dataset.target === e.target.id));
     }
   });
 }, { rootMargin: "-40% 0px -50% 0px" });
-sections.forEach(s => observer.observe(s));
+sections.forEach(s => sectionObserver.observe(s));
 
 const themeToggle = document.getElementById("themeToggle");
 const iconMoon = document.getElementById("iconMoon");
@@ -259,6 +380,8 @@ function renderShadePanel() {
 /* ================= MIXER ================= */
 
 const blendSwatch = document.getElementById("blendSwatch");
+const matchSwatch = document.getElementById("matchSwatch");
+const mixMatch = document.getElementById("mixMatch");
 const mixComponents = document.getElementById("mixComponents");
 const pickTray = document.getElementById("pickTray");
 const productSelect = document.getElementById("productSelect");
@@ -268,29 +391,44 @@ const unitPriceEl = document.getElementById("unitPrice");
 const addToCartBtn = document.getElementById("addToCartBtn");
 const clearMixBtn = document.getElementById("clearMixBtn");
 
-// populate product dropdown once
-Object.entries(PRODUCTS).forEach(([key, p]) => {
+const MIXER_PRODUCTS = CATALOGUE.filter(p => p.tintable);
+MIXER_PRODUCTS.forEach(p => {
   const opt = document.createElement("option");
-  opt.value = key;
+  opt.value = p.id;
   opt.textContent = p.name;
   productSelect.appendChild(opt);
 });
 
-function currentProductKey() { return productSelect.value; }
+function currentProduct() { return productById(productSelect.value); }
 
 function populateSizes() {
-  const product = PRODUCTS[currentProductKey()];
+  const product = currentProduct();
   const available = SIZE_ORDER.filter(s => product.prices[s] !== undefined);
   sizeSelect.innerHTML = available.map(s => `<option value="${s}">${s}</option>`).join("");
+}
+
+function selectProductForMixer(id) {
+  productSelect.value = id;
+  populateSizes();
+  updatePrice();
+  document.getElementById("colors").scrollIntoView({ behavior: "smooth" });
 }
 
 function renderMixer() {
   const hexes = picks.map(p => p.hex);
   const blend = blendHexes(hexes);
   blendSwatch.style.background = blend || "";
-  mixComponents.textContent = picks.length
-    ? picks.map(p => p.name).join(" + ")
-    : "Add up to 5 shades to preview your blend";
+
+  if (picks.length === 0) {
+    matchSwatch.style.background = "";
+    mixMatch.textContent = "Add up to 5 shades to preview your blend";
+    mixComponents.textContent = "";
+  } else {
+    const nearest = findNearestShade(blend);
+    matchSwatch.style.background = nearest.hex;
+    mixMatch.innerHTML = `Closest to <b>${nearest.name}</b>`;
+    mixComponents.textContent = "Mixed from: " + picks.map(p => p.name).join(" + ");
+  }
 
   pickTray.innerHTML = picks.map(p => `
     <div class="pick-chip">
@@ -312,7 +450,7 @@ function renderMixer() {
 }
 
 function updatePrice() {
-  const product = PRODUCTS[currentProductKey()];
+  const product = currentProduct();
   const size = sizeSelect.value;
   const price = product.prices[size];
   unitPriceEl.textContent = price ? fmt(price) : "—";
@@ -322,17 +460,17 @@ productSelect.addEventListener("change", () => { populateSizes(); updatePrice();
 sizeSelect.addEventListener("change", updatePrice);
 
 document.getElementById("qtyMinus").addEventListener("click", () => {
-  qty = Math.max(1, qty - 1);
-  qtyValue.textContent = qty;
+  mixQty = Math.max(1, mixQty - 1);
+  qtyValue.textContent = mixQty;
 });
 document.getElementById("qtyPlus").addEventListener("click", () => {
-  qty = Math.min(99, qty + 1);
-  qtyValue.textContent = qty;
+  mixQty = Math.min(99, mixQty + 1);
+  qtyValue.textContent = mixQty;
 });
 
 clearMixBtn.addEventListener("click", () => {
   picks = [];
-  qty = 1;
+  mixQty = 1;
   qtyValue.textContent = "1";
   renderMixer();
   renderShadePanel();
@@ -340,20 +478,23 @@ clearMixBtn.addEventListener("click", () => {
 
 addToCartBtn.addEventListener("click", () => {
   if (picks.length === 0) return;
-  const product = PRODUCTS[currentProductKey()];
+  const product = currentProduct();
   const size = sizeSelect.value;
   const unitPrice = product.prices[size];
+  const blend = blendHexes(picks.map(p => p.hex));
+  const nearest = findNearestShade(blend);
   cart.push({
     id: Date.now(),
+    type: "mix",
     shadeNames: picks.map(p => p.name),
-    blend: blendHexes(picks.map(p => p.hex)),
-    productKey: currentProductKey(),
+    matchedName: nearest.name,
+    blend,
     productName: product.name,
-    size, qty, unitPrice,
+    size, qty: mixQty, unitPrice,
   });
   saveCart();
   picks = [];
-  qty = 1;
+  mixQty = 1;
   qtyValue.textContent = "1";
   renderMixer();
   renderShadePanel();
@@ -361,52 +502,138 @@ addToCartBtn.addEventListener("click", () => {
   flashCart();
 });
 
-/* ================= PRODUCT CARDS ================= */
+/* ================= PRODUCT CATALOGUE / SHOP ================= */
 
+const categoryTabsEl = document.getElementById("categoryTabs");
 const productGrid = document.getElementById("productGrid");
 
-function renderProductCards() {
-  productGrid.innerHTML = Object.values(PRODUCTS).map((p, i) => `
+function renderCategoryTabs() {
+  const cats = ["All", ...CATEGORY_ORDER];
+  categoryTabsEl.innerHTML = cats.map(c => `
+    <button class="cat-tab ${activeCategory === c ? "active" : ""}" data-cat="${c}">${c}</button>
+  `).join("");
+  categoryTabsEl.querySelectorAll("[data-cat]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      activeCategory = btn.dataset.cat;
+      renderCategoryTabs();
+      renderProductCards();
+    });
+  });
+}
+
+function productCardHtml(p) {
+  const priceEntries = Object.entries(p.prices || {});
+  const hasPrices = priceEntries.length > 0;
+  const availableSizes = SIZE_ORDER.filter(s => p.prices[s] !== undefined);
+  if (cardQty[p.id] === undefined) cardQty[p.id] = 1;
+
+  return `
     <div class="product-card">
+      <div class="product-image">
+        ${p.image
+          ? `<img src="${p.image}" alt="${p.name} container" />`
+          : `<div class="image-placeholder"><span class="ph-icon">🪣</span><span>Photo coming soon</span></div>`}
+      </div>
       <h3>${p.name}</h3>
       <span class="product-tag">${p.tag}</span>
       <p class="blurb">${p.blurb}</p>
-      <div class="price-grid">
-        ${Object.entries(p.prices).map(([size, price]) => `
-          <div class="price-pill"><div class="size">${size}</div><div class="price">${fmt(price)}</div></div>
-        `).join("")}
-      </div>
-      <button class="prep-toggle" data-prep="${i}">Application &amp; surface prep ▾</button>
-      <div class="prep-content" id="prep-${i}">
+      ${hasPrices ? `
+        <div class="price-grid">
+          ${priceEntries.map(([size, price]) => `<div class="price-pill"><div class="size">${size}</div><div class="price">${fmt(price)}</div></div>`).join("")}
+        </div>
+        <div class="buy-row">
+          <select class="buy-size" data-buy-size="${p.id}">
+            ${availableSizes.map(s => `<option value="${s}">${s}</option>`).join("")}
+          </select>
+          <div class="qty-stepper small">
+            <button data-buy-minus="${p.id}" type="button">−</button>
+            <span id="buyQty-${p.id}">${cardQty[p.id]}</span>
+            <button data-buy-plus="${p.id}" type="button">+</button>
+          </div>
+          <button class="btn btn-primary btn-sm" data-buy-add="${p.id}">Add to cart</button>
+        </div>
+      ` : `
+        <p class="contact-price">Contact us for pricing</p>
+        <a class="btn btn-outline btn-sm btn-block" href="mailto:apex@apexcoating.com?subject=Price%20enquiry:%20${encodeURIComponent(p.name)}">Enquire</a>
+      `}
+      ${p.tintable ? `<button class="mix-link" data-mix-product="${p.id}">Or mix a custom colour →</button>` : ""}
+      <button class="prep-toggle" data-prep="${p.id}">Application &amp; surface prep ▾</button>
+      <div class="prep-content" id="prep-${p.id}">
         <p><b>Surface prep:</b> ${p.prep}</p>
         <p><b>Application:</b> ${p.application}</p>
       </div>
     </div>
-  `).join("");
+  `;
+}
 
+function renderProductCards() {
+  let html = "";
+  if (activeCategory === "All") {
+    CATEGORY_ORDER.forEach(cat => {
+      const items = CATALOGUE.filter(p => p.category === cat);
+      if (!items.length) return;
+      html += `<h3 class="category-heading display">${cat}</h3>`;
+      html += `<div class="product-grid">${items.map(productCardHtml).join("")}</div>`;
+    });
+  } else {
+    const items = CATALOGUE.filter(p => p.category === activeCategory);
+    html += `<div class="product-grid">${items.map(productCardHtml).join("")}</div>`;
+  }
+  productGrid.innerHTML = html;
+  wireProductCardEvents();
+}
+
+function wireProductCardEvents() {
   productGrid.querySelectorAll("[data-prep]").forEach(btn => {
     btn.addEventListener("click", () => {
       document.getElementById("prep-" + btn.dataset.prep).classList.toggle("open");
+    });
+  });
+  productGrid.querySelectorAll("[data-mix-product]").forEach(btn => {
+    btn.addEventListener("click", () => selectProductForMixer(btn.dataset.mixProduct));
+  });
+  productGrid.querySelectorAll("[data-buy-minus]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.buyMinus;
+      cardQty[id] = Math.max(1, cardQty[id] - 1);
+      document.getElementById("buyQty-" + id).textContent = cardQty[id];
+    });
+  });
+  productGrid.querySelectorAll("[data-buy-plus]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.buyPlus;
+      cardQty[id] = Math.min(99, cardQty[id] + 1);
+      document.getElementById("buyQty-" + id).textContent = cardQty[id];
+    });
+  });
+  productGrid.querySelectorAll("[data-buy-add]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.buyAdd;
+      const p = productById(id);
+      const sizeSel = productGrid.querySelector(`[data-buy-size="${id}"]`);
+      const size = sizeSel.value;
+      const qty = cardQty[id] || 1;
+      cart.push({
+        id: Date.now(),
+        type: "product",
+        productName: p.name,
+        image: p.image,
+        size, qty,
+        unitPrice: p.prices[size],
+      });
+      saveCart();
+      renderCart();
+      flashCart();
     });
   });
 }
 
 /* ================= CART ================= */
 
-const cartToggle = document.getElementById("cartToggle");
-const cartOverlay = document.getElementById("cartOverlay");
-const cartDrawer = document.getElementById("cartDrawer");
-const cartClose = document.getElementById("cartClose");
+const cartBadge = document.getElementById("cartBadge");
 const cartItemsEl = document.getElementById("cartItems");
 const cartTotalEl = document.getElementById("cartTotal");
-const cartBadge = document.getElementById("cartBadge");
 const cartQuoteBtn = document.getElementById("cartQuoteBtn");
-
-function openCart() { cartOverlay.hidden = false; cartDrawer.hidden = false; }
-function closeCart() { cartOverlay.hidden = true; cartDrawer.hidden = true; }
-cartToggle.addEventListener("click", openCart);
-cartClose.addEventListener("click", closeCart);
-cartOverlay.addEventListener("click", closeCart);
 
 function flashCart() {
   cartBadge.style.transform = "scale(1.3)";
@@ -418,21 +645,30 @@ function renderCart() {
   cartBadge.textContent = cart.length;
 
   if (cart.length === 0) {
-    cartItemsEl.innerHTML = `<p class="cart-empty">Your cart is empty. Build a mix and add it here.</p>`;
+    cartItemsEl.innerHTML = `<p class="cart-empty">Your cart is empty. Mix a custom colour or shop the range above.</p>`;
   } else {
-    cartItemsEl.innerHTML = cart.map(item => `
-      <div class="cart-item">
-        <span class="dot" style="background:${item.blend}"></span>
-        <div class="cart-item-info">
-          <p class="name">${item.productName}</p>
-          <p class="meta">${item.shadeNames.join(" + ")} · ${item.size} × ${item.qty}</p>
-          <div class="row">
-            <span class="price">${fmt(item.unitPrice * item.qty)}</span>
-            <button data-cart-remove="${item.id}">Remove</button>
+    cartItemsEl.innerHTML = cart.map(item => {
+      const visual = item.type === "mix"
+        ? `<span class="dot" style="background:${item.blend}"></span>`
+        : item.image
+          ? `<img class="cart-thumb" src="${item.image}" alt="${item.productName}" />`
+          : `<span class="dot cart-thumb-placeholder">🪣</span>`;
+      const meta = item.type === "mix"
+        ? `${item.productName} · closest to ${item.matchedName} · mixed from ${item.shadeNames.join(", ")} · ${item.size} × ${item.qty}`
+        : `${item.productName} · ${item.size} × ${item.qty}`;
+      return `
+        <div class="cart-item">
+          ${visual}
+          <div class="cart-item-info">
+            <p class="name">${item.productName}</p>
+            <p class="meta">${meta}</p>
+            <div class="row">
+              <span class="price">${fmt(item.unitPrice * item.qty)}</span>
+              <button data-cart-remove="${item.id}">Remove</button>
+            </div>
           </div>
-        </div>
-      </div>
-    `).join("");
+        </div>`;
+    }).join("");
     cartItemsEl.querySelectorAll("[data-cart-remove]").forEach(btn => {
       btn.addEventListener("click", () => {
         cart = cart.filter(i => i.id !== Number(btn.dataset.cartRemove));
@@ -445,12 +681,15 @@ function renderCart() {
   const total = cart.reduce((sum, i) => sum + i.unitPrice * i.qty, 0);
   cartTotalEl.textContent = fmt(total);
 
+  const lines = cart.map(i => i.type === "mix"
+    ? `- ${i.productName}, ${i.size} × ${i.qty} — custom mix (closest to ${i.matchedName}, blended from ${i.shadeNames.join(", ")}) — ${fmt(i.unitPrice * i.qty)}`
+    : `- ${i.productName}, ${i.size} × ${i.qty} — ${fmt(i.unitPrice * i.qty)}`
+  );
   const body = encodeURIComponent(
-    "Hello Apex Coating,\n\nI'd like a quote for the following custom mixes:\n" +
-    cart.map(i => `- ${i.productName}, ${i.size} × ${i.qty} — mix of ${i.shadeNames.join(", ")} — ${fmt(i.unitPrice * i.qty)}`).join("\n") +
+    "Hello Apex Coating,\n\nI'd like a quote for the following:\n" + lines.join("\n") +
     `\n\nEstimated total: ${fmt(total)}\n\nThank you.`
   );
-  cartQuoteBtn.href = cart.length ? `mailto:apex@apexcoating.com?subject=Custom%20mix%20quote%20request&body=${body}` : "#";
+  cartQuoteBtn.href = cart.length ? `mailto:apex@apexcoating.com?subject=Quote%20request&body=${body}` : "#";
 }
 
 /* ================= FEEDBACK FORM ================= */
@@ -474,6 +713,7 @@ renderGroups();
 renderShadePanel();
 populateSizes();
 renderMixer();
+renderCategoryTabs();
 renderProductCards();
 renderCart();
 updateFbButton();
