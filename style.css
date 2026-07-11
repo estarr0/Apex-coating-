@@ -583,6 +583,7 @@ main { margin-left: 76px; }
   display: flex; align-items: center; justify-content: center;
   padding: 20px;
 }
+.modal-overlay[hidden] { display: none; }
 .modal-box {
   background: var(--card);
   border-radius: 16px;
