@@ -119,7 +119,7 @@ const CATALOGUE = [
     blurb: "Standard alkyd gloss enamel for wood and metal.",
     prep: "Clean, dry surfaces free of oil, grease and flaking material. Fresh surfaces need a primer undercoat.",
     application: "Brush or spray. One to two coats over undercoat. Clean with white spirit.",
-    prices: { "1/4L": 90, "1/2L": 160, "4L": 900, "20L": 4500 } },
+    prices: { "1/4L": 90, "1/2L": 160, "1L": 300, "4L": 900, "20L": 4500 } },
   { id: "glossTexstar", name: "Gloss Texstar", tag: "Economy gloss", category: "Economy Range", tintable: true, image: null,
     blurb: "Economy gloss finish for wood and metal surfaces.",
     prep: "Clean, dry surfaces free of oil, grease and flaking material.",
