@@ -2,74 +2,76 @@
 
 const GROUPS = [
   { id: "neutral", label: "Whites & Neutrals", swatch: "#F2ECDA", shades: [
-    { name: "Soft White", hex: "#F5F1E7" }, { name: "Ivory", hex: "#F0E6C9" },
-    { name: "Magnolia", hex: "#F2E9CE" }, { name: "Buttermilk", hex: "#F2E2B8" },
-    { name: "Vellum", hex: "#EDE4C8" }, { name: "Full Moon", hex: "#F5F0DD" },
+    { name: "Soft White", hex: "#F5F1E7", code: "10 B 15" }, { name: "Ivory", hex: "#F0E6C9", code: "10 C 31" },
+    { name: "Magnolia", hex: "#F2E9CE", code: "08 B 15" }, { name: "Buttermilk", hex: "#F2E2B8", code: "08 C 31" },
+    { name: "Vellum", hex: "#EDE4C8", code: "08 B 17" }, { name: "Full Moon", hex: "#F5F0DD" },
     { name: "Porcelain Bowl", hex: "#F3EFD9" }, { name: "Antique Cream", hex: "#EDE0BE" },
   ]},
   { id: "yellow", label: "Yellow", swatch: "#F0CB53", shades: [
-    { name: "Mustard", hex: "#C99A3E" }, { name: "Jasmine", hex: "#F2E27A" },
-    { name: "Just Yellow", hex: "#F2CB2B" }, { name: "African Gold", hex: "#C08A2E" },
-    { name: "Yellow Canary", hex: "#F2D53C" }, { name: "Golden Sun", hex: "#F0CB53" },
-    { name: "Summer Yellow", hex: "#F0DE7E" }, { name: "Tivoli Gold", hex: "#E8A93A" },
+    { name: "Mustard", hex: "#C99A3E", code: "10 C 35" }, { name: "Jasmine", hex: "#F2E27A", code: "10 E 49" },
+    { name: "Just Yellow", hex: "#F2CB2B", code: "10 E 50" }, { name: "African Gold", hex: "#C08A2E", code: "10 D 45" },
+    { name: "Yellow Canary", hex: "#F2D53C", code: "10 E 53" }, { name: "Golden Sun", hex: "#F0CB53" },
+    { name: "Summer Yellow", hex: "#F0DE7E" }, { name: "Tivoli Gold", hex: "#E8A93A", code: "08 E 51" },
     { name: "Soleil", hex: "#F0D23C" },
   ]},
   { id: "orange", label: "Orange", swatch: "#E8862B", shades: [
-    { name: "Tango", hex: "#E8862B" }, { name: "Peach Melba", hex: "#F0B98A" },
-    { name: "Orange Tan", hex: "#D9631F" }, { name: "Bokhara", hex: "#D9601F" },
+    { name: "Tango", hex: "#E8862B", code: "06 E 51" }, { name: "Peach Melba", hex: "#F0B98A", code: "06 E 50" },
+    { name: "Orange Tan", hex: "#D9631F", code: "06 E 56" }, { name: "Bokhara", hex: "#D9601F", code: "06 D 43" },
     { name: "Croquet Orange", hex: "#E8601F" }, { name: "Morroccan Sun", hex: "#E8862B" },
     { name: "Ginger Snap", hex: "#C4602F" }, { name: "Sundown", hex: "#E0A468" },
   ]},
   { id: "red", label: "Red & Pink", swatch: "#C4293A", shades: [
-    { name: "Rusty Red", hex: "#B5342A" }, { name: "Geranium", hex: "#C4293A" },
-    { name: "Brick Dust", hex: "#C4485A" }, { name: "Deco Red", hex: "#A61F2E" },
-    { name: "Coral Pink", hex: "#D97C86" }, { name: "Powder Pink", hex: "#EFC0CB" },
-    { name: "Dawn Pink", hex: "#EAC7BE" }, { name: "Riva Red", hex: "#C21F26" },
-    { name: "Sentry Red", hex: "#9E1B24" },
+    { name: "Rusty Red", hex: "#B5342A", code: "04 D 44" }, { name: "Geranium", hex: "#C4293A", code: "04 E 53" },
+    { name: "Brick Dust", hex: "#C4485A", code: "04 C 37" }, { name: "Deco Red", hex: "#A61F2E", code: "04 D 45" },
+    { name: "Coral Pink", hex: "#D97C86", code: "04 E 49" }, { name: "Powder Pink", hex: "#EFC0CB", code: "02 C 33" },
+    { name: "Dawn Pink", hex: "#EAC7BE", code: "04 C 33" }, { name: "Riva Red", hex: "#C21F26" },
+    { name: "Sentry Red", hex: "#9E1B24" }, { name: "Amber Glow", hex: "#C0522A" },
+    { name: "Orchestral Red", hex: "#8E1F2A" },
   ]},
   { id: "purple", label: "Purple & Lilac", swatch: "#8E7FC7", shades: [
-    { name: "Mulberry", hex: "#4A1B33" }, { name: "Spanish Violet", hex: "#5A2C82" },
-    { name: "Victoria Plum", hex: "#3D1A44" }, { name: "Wild Lilac", hex: "#C9AFD1" },
-    { name: "Clover", hex: "#91237E" }, { name: "Lilac", hex: "#8E7FC7" },
+    { name: "Mulberry", hex: "#4A1B33", code: "02 C 39" }, { name: "Spanish Violet", hex: "#5A2C82", code: "22 D 45" },
+    { name: "Victoria Plum", hex: "#3D1A44", code: "02 C 40" }, { name: "Wild Lilac", hex: "#C9AFD1", code: "24 C 33" },
+    { name: "Clover", hex: "#91237E", code: "02 C 37" }, { name: "Lilac", hex: "#8E7FC7" },
     { name: "Lavender", hex: "#7F8FD1" }, { name: "Light Lilac", hex: "#B7A8E0" },
     { name: "Lilac Haze", hex: "#E3D3E6" },
   ]},
   { id: "blue", label: "Blue", swatch: "#1F5FA8", shades: [
-    { name: "Billberry", hex: "#5E6FB0" }, { name: "Northern Sky", hex: "#5F92AC" },
-    { name: "Zircon", hex: "#A9CBD4" }, { name: "Aqua", hex: "#4FA6A0" },
-    { name: "Cote D'Azur", hex: "#1E3A73" }, { name: "Capri", hex: "#1B7A8C" },
-    { name: "Polar Blue", hex: "#7EC1E0" }, { name: "Cosmos", hex: "#12123B" },
-    { name: "Cornflower", hex: "#1F5FA8" }, { name: "True Blue", hex: "#1E6FBF" },
+    { name: "Billberry", hex: "#5E6FB0", code: "22 C 37" }, { name: "Northern Sky", hex: "#5F92AC", code: "18 C 35" },
+    { name: "Zircon", hex: "#A9CBD4", code: "16 C 33" }, { name: "Aqua", hex: "#4FA6A0", code: "14 C 35" },
+    { name: "Cote D'Azur", hex: "#1E3A73", code: "18 D 43" }, { name: "Capri", hex: "#1B7A8C", code: "16 C 37" },
+    { name: "Polar Blue", hex: "#7EC1E0", code: "18 E 50" }, { name: "Cosmos", hex: "#12123B", code: "18 C 39" },
+    { name: "Cornflower", hex: "#1F5FA8", code: "18 E 53" }, { name: "True Blue", hex: "#1E6FBF", code: "20 E 51" },
     { name: "Malindi Blue", hex: "#2E6FC4" }, { name: "Summer Blue", hex: "#8FB9D6" },
   ]},
   { id: "green", label: "Green", swatch: "#1F8A4C", shades: [
-    { name: "Emerald", hex: "#1A8C55" }, { name: "Sage", hex: "#B7C89E" },
-    { name: "Willow", hex: "#A9C97E" }, { name: "Lollipop", hex: "#A9D62E" },
-    { name: "Greengage", hex: "#4F8C1F" }, { name: "Laurel", hex: "#1F5F2F" },
-    { name: "Beetle Green", hex: "#0F3D28" }, { name: "Forest Green", hex: "#1C3B22" },
+    { name: "Emerald", hex: "#1A8C55", code: "14 E 53" }, { name: "Sage", hex: "#B7C89E", code: "12 B 17" },
+    { name: "Willow", hex: "#A9C97E", code: "12 C 33" }, { name: "Lollipop", hex: "#A9D62E", code: "12 E 51" },
+    { name: "Greengage", hex: "#4F8C1F", code: "12 D 43" }, { name: "Laurel", hex: "#1F5F2F", code: "12 D 45" },
+    { name: "Beetle Green", hex: "#0F3D28", code: "14 C 39" }, { name: "Forest Green", hex: "#1C3B22", code: "12 C 39" },
     { name: "Safaricom Green", hex: "#3FAA35" }, { name: "Kenya Green", hex: "#1F8A4C" },
     { name: "Apple Mint", hex: "#A9D9B0" }, { name: "Mellow Sage", hex: "#7FA07A" },
   ]},
   { id: "brown", label: "Brown & Tan", swatch: "#A9662E", shades: [
-    { name: "Rawhide", hex: "#A9662E" }, { name: "Camouflage", hex: "#4A4326" },
-    { name: "Peanut Butter", hex: "#D9B87E" }, { name: "Toadstool", hex: "#7A5A4A" },
-    { name: "Antique Bronze", hex: "#4A3222" }, { name: "Catalan", hex: "#6E5B4A" },
+    { name: "Rawhide", hex: "#A9662E", code: "08 C 37" }, { name: "Camouflage", hex: "#4A4326", code: "10 B 25" },
+    { name: "Peanut Butter", hex: "#D9B87E", code: "06 C 33" }, { name: "Toadstool", hex: "#7A5A4A", code: "04 B 21" },
+    { name: "Antique Bronze", hex: "#4A3222", code: "08 C 39" }, { name: "Catalan", hex: "#6E5B4A", code: "06 C 39" },
     { name: "Terracotta Sand", hex: "#C48A6E" }, { name: "Egyptian Sand", hex: "#D9A96E" },
     { name: "Biscuit", hex: "#D9C29A" }, { name: "Waffle", hex: "#C9A96E" },
     { name: "Cream Silk", hex: "#E0CE9E" }, { name: "Warm Apricot", hex: "#E0A97E" },
+    { name: "Liqueur", hex: "#8A7565" },
   ]},
   { id: "grey", label: "Grey", swatch: "#7E8A8C", shades: [
-    { name: "Pebble", hex: "#C6C9C3" }, { name: "Seagull", hex: "#B7BDB3" },
-    { name: "Corvette", hex: "#9AA3A0" }, { name: "Steel", hex: "#7E8A8C" },
-    { name: "Pigeon", hex: "#6E7C7C" }, { name: "Granite", hex: "#6E7373" },
-    { name: "Slate Grey", hex: "#4A5C5C" }, { name: "Seal Grey", hex: "#3E4A4A" },
-    { name: "Mouse Grey", hex: "#8C8377" }, { name: "Ash", hex: "#B3B0A8" },
-    { name: "Moonlight", hex: "#D3D9D6" }, { name: "Ice", hex: "#C9D3D1" },
+    { name: "Pebble", hex: "#C6C9C3", code: "00 A 01" }, { name: "Seagull", hex: "#B7BDB3", code: "10 A 03" },
+    { name: "Corvette", hex: "#9AA3A0", code: "00 A 05" }, { name: "Steel", hex: "#7E8A8C", code: "10 A 07" },
+    { name: "Pigeon", hex: "#6E7C7C", code: "18 B 21" }, { name: "Granite", hex: "#6E7373", code: "00 A 09" },
+    { name: "Slate Grey", hex: "#4A5C5C", code: "18 B 25" }, { name: "Seal Grey", hex: "#3E4A4A", code: "10 A 11" },
+    { name: "Mouse Grey", hex: "#8C8377", code: "08 B 21" }, { name: "Ash", hex: "#B3B0A8", code: "22 B 15" },
+    { name: "Moonlight", hex: "#D3D9D6", code: "18 C 31" }, { name: "Ice", hex: "#C9D3D1" },
   ]},
   { id: "black", label: "Black & Dark", swatch: "#1C2320", shades: [
-    { name: "Velvet Grey", hex: "#1C2320" }, { name: "Gun Metal", hex: "#16211E" },
-    { name: "Black", hex: "#0A0A0A" }, { name: "Lizard", hex: "#14140F" },
-    { name: "Panatella", hex: "#2A2419" }, { name: "Midnight Blue", hex: "#12123B" },
+    { name: "Velvet Grey", hex: "#1C2320", code: "00 A 13" }, { name: "Gun Metal", hex: "#16211E", code: "18 B 29" },
+    { name: "Black", hex: "#0A0A0A" }, { name: "Lizard", hex: "#14140F", code: "10 B 29" },
+    { name: "Panatella", hex: "#2A2419", code: "10 C 39" }, { name: "Midnight Blue", hex: "#12123B", code: "20 C 40" },
   ]},
 ];
 
@@ -80,7 +82,7 @@ const ALL_SHADES = GROUPS.flatMap(g => g.shades.map(s => ({ ...s, group: g.label
 // prices: {} means no confirmed price yet -> card shows "Contact us"
 
 const CATALOGUE = [
-  { id: "matt", name: "Acrylic Emulsion (Vinyl Matt)", tag: "Exterior", category: "Emulsion & Water-Based Paints", tintable: true, image: "images/floating/acrylic-matt-white-hq.png",
+  { id: "matt", name: "Acrylic Emulsion (Vinyl Matt)", tag: "Exterior", category: "Emulsion & Water-Based Paints", tintable: true, spec: { thinning: "Max 1L water to 4L paint", drying: "Touch dry 20 min max, recoatable after 1 hr", spreading: "14–15 sq.m per litre", finish: "Matt" }, image: "images/floating/acrylic-matt-white-hq.png",
     blurb: "Superior architectural paint on durable acrylic resin. Alkali-resistant, built for heavy rain, dry seasons and strong sun.",
     prep: "Surfaces clean, dry, free of oil, grease, wax or dust. Remove old flaky material. No priming needed on new smooth surfaces.",
     application: "Soft paintbrush or roller. One or two coats depending on porosity. Clean equipment with tap water immediately after use.",
@@ -95,17 +97,17 @@ const CATALOGUE = [
     prep: "Surfaces clean, dry, free from contaminants and loose material. New surfaces need an alkali-resisting undercoat first.",
     application: "Brush, roller or spray. Two coats recommended for full protection.",
     prices: { "4L": 2000, "10L": 5000, "20L": 9500 } },
-  { id: "silk", name: "Vinyl Wallsheen (Silk)", tag: "Interior", category: "Emulsion & Water-Based Paints", tintable: true, image: "images/floating/silk-vinyl-white-hq.png",
+  { id: "silk", name: "Vinyl Wallsheen (Silk)", tag: "Interior", category: "Emulsion & Water-Based Paints", tintable: true, spec: { thinning: "Clean tap water", drying: "Touch dry 15–20 min, recoatable after 1 hr", spreading: "10–15 sq.m per litre depending on surface", finish: "Low sheen" }, image: "images/floating/silk-vinyl-white-hq.png",
     blurb: "High-performance interior paint, cool satin finish, high wet-scrub resistance.",
     prep: "Surfaces clean, free from grease, oil, wax, moisture and loose material. New surfaces need one coat of alkali-resisting undercoat first.",
     application: "Soft paintbrush, roller or spray. At least two coats after the undercoat. Clean equipment with tap water immediately.",
     prices: { "1/2L": 350, "1L": 650, "4L": 2100, "10L": 5500, "20L": 10000 } },
-  { id: "supergloss", name: "Supergloss", tag: "High gloss", category: "Oil-Based Paints", tintable: true, image: "images/floating/supergloss-white-hq.png",
+  { id: "supergloss", name: "Supergloss", tag: "High gloss", category: "Oil-Based Paints", tintable: true, pairsWith: ["glossUndercoat", "highGlossThinner"], spec: { thinning: "Max 1L white spirit to 4L paint", drying: "Touch dry 3–8 hrs", spreading: "15 sq.m per litre", finish: "Glossy" }, image: "images/floating/supergloss-white-hq.png",
     blurb: "Oil-modified alkyd enamel. Long-lasting, easy-clean coat for wood, metal, asbestos and concrete.",
     prep: "Clean, dry surfaces free of oil, grease, wax and old flaky paint. Fresh surfaces need a primer undercoat first.",
     application: "Soft brush, air spray or dipping. One or two coats over the undercoat. Clean equipment with terpentine or white spirit.",
     prices: { "1/2L": 330, "1L": 650, "4L": 2250, "10L": 5500, "20L": 10500 } },
-  { id: "texstar", name: "Texstar Emulsion", tag: "Economy interior", category: "Economy Range", tintable: true, image: "images/floating/texstar-coat-white-hq.png",
+  { id: "texstar", name: "Texstar Emulsion", tag: "Economy interior", category: "Economy Range", tintable: true, spec: { thinning: "1L water to 4L paint", drying: "Touch dry 20 min max, recoatable after 1 hr", spreading: "10–13 sq.m per litre", finish: "Matt (light shades only)" }, image: "images/floating/texstar-coat-white-hq.png",
     blurb: "Everyday-value emulsion for interior walls.",
     prep: "Surfaces clean, dry and free from dust or flaking material.",
     application: "Brush or roller. One to two coats depending on porosity.",
@@ -115,12 +117,12 @@ const CATALOGUE = [
     prep: "Surfaces clean, dry and free from dust or flaking material.",
     application: "Brush or roller. One to two coats depending on porosity.",
     prices: { "1/4L": 200, "1/2L": 360, "1L": 630, "4L": 390, "10L": 850, "20L": 1500 } },
-  { id: "glossEnamel", name: "Gloss Enamel", tag: "Standard gloss", category: "Oil-Based Paints", tintable: true, image: "images/floating/gloss-enamel-two-sizes.png",
+  { id: "glossEnamel", name: "Gloss Enamel", tag: "Standard gloss", category: "Oil-Based Paints", tintable: true, pairsWith: ["glossUndercoat", "highGlossThinner"], image: "images/floating/gloss-enamel-two-sizes.png",
     blurb: "Standard alkyd gloss enamel for wood and metal.",
     prep: "Clean, dry surfaces free of oil, grease and flaking material. Fresh surfaces need a primer undercoat.",
     application: "Brush or spray. One to two coats over undercoat. Clean with white spirit.",
     prices: { "1/4L": 90, "1/2L": 160, "1L": 300, "4L": 900, "20L": 4500 } },
-  { id: "glossTexstar", name: "Gloss Texstar", tag: "Economy gloss", category: "Economy Range", tintable: true, image: null,
+  { id: "glossTexstar", name: "Gloss Texstar", tag: "Economy gloss", category: "Economy Range", tintable: true, pairsWith: ["texstarUndercoat", "highGlossThinner"], spec: { thinning: "Max 1:4 white spirit", drying: "Touch dry 3–4 hrs", spreading: "11–13 sq.m per litre", finish: "Glossy" }, image: null,
     blurb: "Economy gloss finish for wood and metal surfaces.",
     prep: "Clean, dry surfaces free of oil, grease and flaking material.",
     application: "Brush or spray. One to two coats. Clean with white spirit.",
@@ -142,6 +144,25 @@ const CATALOGUE = [
     application: "Spray or brush. Thin with Apex Standard Thinner for best results.",
     prices: { "1/4L": 200, "1/2L": 400, "4L": 2400, "20L": 10000 } },
 
+  { id: "glossUndercoat", name: "Premier Coat Gloss Undercoat", tag: "Undercoat", category: "Oil-Based Paints", tintable: false, image: null,
+    blurb: "Alkali-resisting undercoat applied before Premier Coat Super Gloss Enamel, for a smoother, longer-lasting finish.",
+    prep: "Surfaces clean, dry and free of oil, grease and old flaking paint. Sand glossy surfaces first.",
+    application: "Brush or roller. One coat before the gloss topcoat. Allow to dry fully before top-coating.",
+    prices: { "1L": 350, "4L": 1200, "20L": 5200 } },
+
+  { id: "texstarUndercoat", name: "Texstar Coat Undercoat", tag: "Undercoat", category: "Economy Range", tintable: false, image: null,
+    blurb: "High-opacity undercoat with a flat matt finish, giving an even key for the topcoat. Recommended for metal, wood and asbestos.",
+    prep: "Surfaces clean, dry and oil-free. Remove loose or flaking material. Sand previously glossy finishes to a matt surface first.",
+    application: "Soft brush or air spray. One coat is usually enough; two for maximum obliteration. Sand smooth before the topcoat. Clean equipment with Premier Coat white spirit.",
+    spec: { thinning: "Max 2L white spirit to 4L paint", drying: "Touch dry 3–4 hrs, sandable after 12 hrs", spreading: "8 sq.m per litre", finish: "Matt", colour: "White; other light shades on request" },
+    prices: { "1/2L": 200, "1L": 380, "4L": 1250, "20L": 4600 } },
+
+  { id: "highGlossThinner", name: "High Gloss Thinner", tag: "Thinner", category: "Thinners", tintable: false, image: null,
+    blurb: "Thinner formulated specifically for gloss enamel — for brushing consistency and equipment cleaning.",
+    prep: "N/A — thinning and cleaning agent.",
+    application: "Add gradually to gloss enamel until desired consistency is reached.",
+    prices: { "1L": 240, "4L": 400, "10L": 1500, "20L": 5800 } },
+
   { id: "turpentine", name: "Turpentine", tag: "Thinner", category: "Thinners", tintable: false, image: "images/floating/turpentine.png",
     blurb: "General-purpose thinner for oil-based paints and brush cleaning.",
     prep: "N/A — thinning and cleaning agent.",
@@ -158,25 +179,41 @@ const CATALOGUE = [
     application: "Add gradually to paint until desired consistency is reached.",
     prices: { "1/2L": 200, "1L": 350, "4L": 1250, "10L": 1400, "20L": 4200 } },
 
-  { id: "serafricGlue", name: "Serafric Professional Wood Glue", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-professional-wood-glue-hq.png",
-    blurb: "Professional-grade white wood glue for furniture and joinery.",
+  { id: "serafric199Professional", name: "Serafric 199 Professional Wood Glue", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-professional-wood-glue-hq.png",
+    blurb: "Professional high-quality PVA wood adhesive. Quick setting, dries to a clear film. For high-quality furniture, wood bonding and joinery work.",
+    prep: "Surfaces clean, dry and free of dust, deposits or excessive moisture for maximum adhesion.",
+    application: "Apply an even film with a spreader, brush or roller. Join parts while wet and clamp until fully set. Clean equipment with clean tap water immediately after use.",
+    spec: { colour: "Milk white", openTime: "~15 min (varies with humidity and temperature)", cure: "Full adhesion after 24 hours", specificGravity: "1.12 ± 0.02 kg/L" },
+    prices: {} },
+  { id: "serafric199Express", name: "Serafric 199 Express Wood Glue", tag: "Adhesive", category: "Adhesives", tintable: false, image: null,
+    blurb: "Express PVA white wood adhesive for everyday wood bonding and joinery work.",
     prep: "Surfaces clean, dry and free of dust or old adhesive residue.",
-    application: "Apply evenly with a brush or spreader. Clamp until set.",
+    application: "Apply evenly with a brush or spreader. Join parts and clamp until set.",
     prices: {} },
-  { id: "serafric101", name: "Serafric 101 Contact Cement", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-101-contact-cement.png",
-    blurb: "High neoprene contact cement for leather, PVC, foamed polyurethane, mattresses and upholstery jobs. 5 litres.",
+  { id: "serafric101", name: "Serafric 101 Neoprene Contact Adhesive", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-101-contact-cement.png",
+    blurb: "High-quality solvent-based neoprene contact adhesive. For Formica to wood, PVC, rubber, leather and rexine.",
     prep: "Surfaces clean, dry and free of dust or grease.",
-    application: "Apply by brush to both surfaces, allow to become touch-dry, then bond. Not to be used near naked flame — highly flammable.",
+    application: "Apply by brush to both surfaces, allow to become touch-dry, then bond firmly. Not to be used near naked flame — highly flammable.",
     prices: {} },
-  { id: "serafric103", name: "Serafric 103 Contact Cement", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-103-contact-cement.png",
-    blurb: "High neoprene contact cement for leather, PVC, foamed polyurethane, mattresses and upholstery. 5 litres.",
+  { id: "serafric103", name: "Serafric 103 Neoprene Contact Adhesive", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-103-contact-cement.png",
+    blurb: "Quality solvent-based neoprene contact adhesive. For leather, PVC, foamed polyurethane, mattresses and upholstery — including bags and ladies' handbags.",
+    prep: "Surfaces clean, dry and free of dust or grease.",
+    application: "Apply by brush to both surfaces, allow to become touch-dry, then bond firmly.",
+    prices: {} },
+  { id: "serafric104", name: "Serafric 104 Premier Neoprene Contact Adhesive", tag: "Adhesive", category: "Adhesives", tintable: false, image: null,
+    blurb: "Premier-quality solvent-based neoprene contact adhesive for special jobs and difficult-to-bond materials — Formica to wood, PVC, rubber, leather.",
     prep: "Surfaces clean, dry and free of dust or grease.",
     application: "Apply by brush to both surfaces, allow to become touch-dry, then bond firmly.",
     prices: {} },
   { id: "serafric202", name: "Serafric 202 PVC Adhesive", tag: "Adhesive", category: "Adhesives", tintable: false, image: "images/floating/serafric-202-pvc-adhesive.png",
-    blurb: "PVC adhesive for PVC pipes and fittings. 1.4 litres.",
+    blurb: "High-quality, fast-drying polyvinyl chloride adhesive. For PVC clean water pipes, waste water pipes, conduits, electrical fittings and PVC gutters.",
     prep: "Surfaces clean, dry and free of dust or moisture.",
     application: "Apply to both pipe and fitting surfaces, join immediately, hold firmly until set.",
+    prices: {} },
+  { id: "serafric915J", name: "Serafric 915J PVA Glue", tag: "Adhesive", category: "Adhesives", tintable: false, image: null,
+    blurb: "PVA glue for plastic labelling — hand and machine application of paper labels to plastic bottles and containers.",
+    prep: "Surfaces clean, dry and free of dust or residue.",
+    application: "Apply by hand or machine per labelling equipment instructions.",
     prices: {} },
 
   { id: "floorPaintRed", name: "Gloss Enamel Floor Paint (Red)", tag: "Floor paint", category: "Oil-Based Paints", tintable: false, image: "images/floating/gloss-enamel-floor-paint-red.png",
@@ -353,6 +390,7 @@ function renderShadePanel() {
             <div class="swatch" style="background:${s.hex}"></div>
             <div class="info">
               <p>${s.name}</p>
+              ${s.code ? `<p class="shade-code">BS 4800 · ${s.code}</p>` : ""}
               <button data-shade="${s.name}" class="${picked ? "added" : disabled ? "disabled" : ""}" ${disabled ? "disabled" : ""}>
                 ${picked ? "✓ Added" : "+ Add to mix"}
               </button>
@@ -572,10 +610,25 @@ function productCardHtml(p) {
         <a class="btn btn-outline btn-sm btn-block" href="mailto:apex@apexcoating.com?subject=Price%20enquiry:%20${encodeURIComponent(p.name)}">Enquire</a>
       `}
       ${p.tintable ? `<button class="mix-link" data-mix-product="${p.id}">Or mix a custom colour →</button>` : ""}
+      ${p.pairsWith && p.pairsWith.length ? `
+        <div class="pairs-with">
+          <p class="pairs-with-label">Use together with:</p>
+          ${p.pairsWith.map(pid => {
+            const companion = productById(pid);
+            if (!companion) return "";
+            const cPrice = Object.values(companion.prices)[0];
+            return `<span class="pairs-with-chip" data-goto-category="${companion.category}">${companion.name}${cPrice ? ` · from ${fmt(Math.min(...Object.values(companion.prices)))}` : ""}</span>`;
+          }).join("")}
+        </div>
+      ` : ""}
       <button class="prep-toggle" data-prep="${p.id}">Application &amp; surface prep ▾</button>
       <div class="prep-content" id="prep-${p.id}">
         <p><b>Surface prep:</b> ${p.prep}</p>
         <p><b>Application:</b> ${p.application}</p>
+        ${p.spec ? Object.entries(p.spec).map(([key, val]) => {
+          const label = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
+          return `<p><b>${label}:</b> ${val}</p>`;
+        }).join("") : ""}
       </div>
     </div>
   `;
@@ -609,6 +662,14 @@ function wireProductCardEvents() {
   });
   productGrid.querySelectorAll("[data-choose-color]").forEach(btn => {
     btn.addEventListener("click", () => openColorPicker(btn.dataset.chooseColor));
+  });
+  productGrid.querySelectorAll("[data-goto-category]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      activeCategory = chip.dataset.gotoCategory;
+      renderCategoryTabs();
+      renderProductCards();
+      document.getElementById("products").scrollIntoView({ behavior: "smooth" });
+    });
   });
   productGrid.querySelectorAll("[data-buy-minus]").forEach(btn => {
     btn.addEventListener("click", () => {
