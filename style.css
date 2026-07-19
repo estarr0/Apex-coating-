@@ -92,6 +92,7 @@ body {
   opacity: 0.6;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
+  text-decoration: none;
   transition: background 0.2s, opacity 0.2s;
 }
 .nav-btn:hover { opacity: 1; }
@@ -137,10 +138,47 @@ main { margin-left: 76px; }
 .section:first-child { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
 
 .hero {
-  background-image: linear-gradient(to right, var(--bg) 38%, transparent 78%), url('images/hero-bg.svg');
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(to right, var(--bg) 42%, transparent 85%), url('images/hero-bg.svg');
   background-repeat: no-repeat;
   background-position: right center;
   background-size: cover;
+}
+
+.wall-carousel {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.wall-float {
+  position: absolute;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  border: 4px solid var(--bg);
+}
+.wall-float img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.wf-1 { width: 200px; height: 260px; top: 8%;  right: 8%;  animation: floatA 9s ease-in-out infinite; }
+.wf-2 { width: 150px; height: 190px; top: 42%; right: 30%; animation: floatB 11s ease-in-out infinite; animation-delay: -2s; }
+.wf-3 { width: 170px; height: 220px; top: 60%; right: 4%;  animation: floatA 10s ease-in-out infinite; animation-delay: -4s; }
+.wf-4 { width: 130px; height: 170px; top: 4%;  right: 34%; animation: floatB 8s ease-in-out infinite; animation-delay: -1s; }
+.wf-5 { width: 155px; height: 200px; top: 74%; right: 24%; animation: floatA 12s ease-in-out infinite; animation-delay: -6s; }
+
+@keyframes floatA {
+  0%, 100% { transform: translate(0, 0) rotate(-3deg); }
+  50% { transform: translate(-14px, -20px) rotate(2deg); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translate(0, 0) rotate(3deg); }
+  50% { transform: translate(16px, 18px) rotate(-2deg); }
+}
+
+@media (max-width: 900px) {
+  .wall-carousel { display: none; }
 }
 
 .eyebrow {
@@ -165,6 +203,8 @@ main { margin-left: 76px; }
   border-radius: 10px;
   border: none;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
   transition: opacity 0.2s, background 0.2s;
 }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -337,6 +377,9 @@ main { margin-left: 76px; }
 
 /* Category tabs */
 .category-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.finish-tabs { margin-top: -14px; margin-bottom: 32px; }
+.finish-tab { background: var(--bg-alt); font-size: 12px; padding: 6px 14px; }
+.finish-tab.active { background: var(--accent2); border-color: var(--accent2); color: #fff; }
 .cat-tab {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
@@ -438,6 +481,21 @@ main { margin-left: 76px; }
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 24px;
+  position: relative;
+}
+.product-card.unavailable { opacity: 0.55; filter: grayscale(0.8); }
+.unavailable-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  z-index: 2;
 }
 .product-image {
   width: 100%;
