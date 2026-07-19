@@ -82,52 +82,52 @@ const ALL_SHADES = GROUPS.flatMap(g => g.shades.map(s => ({ ...s, group: g.label
 // prices: {} means no confirmed price yet -> card shows "Contact us"
 
 const CATALOGUE = [
-  { id: "matt", name: "Acrylic Emulsion (Vinyl Matt)", tag: "Exterior", category: "Emulsion & Water-Based Paints", tintable: true, spec: { thinning: "Max 1L water to 4L paint", drying: "Touch dry 20 min max, recoatable after 1 hr", spreading: "14–15 sq.m per litre", finish: "Matt" }, image: "images/floating/acrylic-matt-white-hq.png",
+  { id: "matt", name: "Acrylic Emulsion (Vinyl Matt)", tag: "Exterior", category: "Emulsion & Water-Based Paints", tintable: true, finish: "Matt", spec: { thinning: "Max 1L water to 4L paint", drying: "Touch dry 20 min max, recoatable after 1 hr", spreading: "14–15 sq.m per litre", finish: "Matt" }, image: "images/floating/acrylic-matt-white-hq.png",
     blurb: "Superior architectural paint on durable acrylic resin. Alkali-resistant, built for heavy rain, dry seasons and strong sun.",
     prep: "Surfaces clean, dry, free of oil, grease, wax or dust. Remove old flaky material. No priming needed on new smooth surfaces.",
     application: "Soft paintbrush or roller. One or two coats depending on porosity. Clean equipment with tap water immediately after use.",
     prices: { "1/2L": 260, "1L": 550, "4L": 1900, "10L": 4700, "20L": 8600 } },
-  { id: "weathershieldSilicon", name: "Weathershield (Silicone Based)", tag: "Premium exterior", category: "Emulsion & Water-Based Paints", tintable: true, image: "images/floating/silicone-weathershield-babypink-hq.png",
+  { id: "weathershieldSilicon", name: "Weathershield (Silicone Based)", tag: "Premium exterior", category: "Emulsion & Water-Based Paints", tintable: true, finish: "Matt", image: "images/floating/silicone-weathershield-babypink-hq.png",
     blurb: "Silicone-based formulation for maximum exterior weather resistance.",
     prep: "Surfaces clean, dry, free from contaminants and loose material. New surfaces need an alkali-resisting undercoat first.",
     application: "Brush, roller or spray. Two coats recommended. Allow full cure time between coats.",
     prices: { "1/2L": 350, "1L": 650, "4L": 2100, "10L": 5000, "20L": 10000 } },
-  { id: "weathershield", name: "Weathershield", tag: "Exterior", category: "Emulsion & Water-Based Paints", tintable: true, image: null,
+  { id: "weathershield", name: "Weathershield", tag: "Exterior", category: "Emulsion & Water-Based Paints", tintable: true, finish: "Matt", image: null,
     blurb: "Heavy-duty exterior protection for facades exposed to harsh weather.",
     prep: "Surfaces clean, dry, free from contaminants and loose material. New surfaces need an alkali-resisting undercoat first.",
     application: "Brush, roller or spray. Two coats recommended for full protection.",
     prices: { "4L": 2000, "10L": 5000, "20L": 9500 } },
-  { id: "silk", name: "Vinyl Wallsheen (Silk)", tag: "Interior", category: "Emulsion & Water-Based Paints", tintable: true, spec: { thinning: "Clean tap water", drying: "Touch dry 15–20 min, recoatable after 1 hr", spreading: "10–15 sq.m per litre depending on surface", finish: "Low sheen" }, image: "images/floating/silk-vinyl-white-hq.png",
+  { id: "silk", name: "Vinyl Wallsheen (Silk)", tag: "Interior", category: "Emulsion & Water-Based Paints", tintable: true, finish: "Silk", spec: { thinning: "Clean tap water", drying: "Touch dry 15–20 min, recoatable after 1 hr", spreading: "10–15 sq.m per litre depending on surface", finish: "Low sheen" }, image: "images/floating/silk-vinyl-white-hq.png",
     blurb: "High-performance interior paint, cool satin finish, high wet-scrub resistance.",
     prep: "Surfaces clean, free from grease, oil, wax, moisture and loose material. New surfaces need one coat of alkali-resisting undercoat first.",
     application: "Soft paintbrush, roller or spray. At least two coats after the undercoat. Clean equipment with tap water immediately.",
     prices: { "1/2L": 350, "1L": 650, "4L": 2100, "10L": 5500, "20L": 10000 } },
-  { id: "supergloss", name: "Supergloss", tag: "High gloss", category: "Oil-Based Paints", tintable: true, pairsWith: ["glossUndercoat", "highGlossThinner"], spec: { thinning: "Max 1L white spirit to 4L paint", drying: "Touch dry 3–8 hrs", spreading: "15 sq.m per litre", finish: "Glossy" }, image: "images/floating/supergloss-white-hq.png",
+  { id: "supergloss", name: "Supergloss", tag: "High gloss", category: "Oil-Based Paints", tintable: true, finish: "Gloss", pairsWith: ["glossUndercoat", "highGlossThinner"], spec: { thinning: "Max 1L white spirit to 4L paint", drying: "Touch dry 3–8 hrs", spreading: "15 sq.m per litre", finish: "Glossy" }, image: "images/floating/supergloss-white-hq.png",
     blurb: "Oil-modified alkyd enamel. Long-lasting, easy-clean coat for wood, metal, asbestos and concrete.",
     prep: "Clean, dry surfaces free of oil, grease, wax and old flaky paint. Fresh surfaces need a primer undercoat first.",
     application: "Soft brush, air spray or dipping. One or two coats over the undercoat. Clean equipment with terpentine or white spirit.",
     prices: { "1/2L": 330, "1L": 650, "4L": 2250, "10L": 5500, "20L": 10500 } },
-  { id: "texstar", name: "Texstar Emulsion", tag: "Economy interior", category: "Economy Range", tintable: true, spec: { thinning: "1L water to 4L paint", drying: "Touch dry 20 min max, recoatable after 1 hr", spreading: "10–13 sq.m per litre", finish: "Matt (light shades only)" }, image: "images/floating/texstar-coat-white-hq.png",
+  { id: "texstar", name: "Texstar Emulsion", tag: "Economy interior", category: "Economy Range", tintable: true, finish: "Matt", spec: { thinning: "1L water to 4L paint", drying: "Touch dry 20 min max, recoatable after 1 hr", spreading: "10–13 sq.m per litre", finish: "Matt (light shades only)" }, image: "images/floating/texstar-coat-white-hq.png",
     blurb: "Everyday-value emulsion for interior walls.",
     prep: "Surfaces clean, dry and free from dust or flaking material.",
     application: "Brush or roller. One to two coats depending on porosity.",
     prices: { "1/4L": 150, "1/2L": 250, "1L": 450, "4L": 550, "10L": 1300, "20L": 2200 } },
-  { id: "plastic", name: "Plastic Emulsion", tag: "Economy interior", category: "Economy Range", tintable: true, image: "images/floating/plastic-matt-white-hq.png",
+  { id: "plastic", name: "Plastic Emulsion", tag: "Economy interior", category: "Economy Range", tintable: true, finish: "Matt", image: "images/floating/plastic-matt-white-hq.png",
     blurb: "Economical plastic-based emulsion for interior walls and ceilings.",
     prep: "Surfaces clean, dry and free from dust or flaking material.",
     application: "Brush or roller. One to two coats depending on porosity.",
     prices: { "1/4L": 200, "1/2L": 360, "1L": 630, "4L": 390, "10L": 850, "20L": 1500 } },
-  { id: "glossEnamel", name: "Gloss Enamel", tag: "Standard gloss", category: "Oil-Based Paints", tintable: true, pairsWith: ["glossUndercoat", "highGlossThinner"], image: "images/floating/gloss-enamel-two-sizes.png",
+  { id: "glossEnamel", name: "Gloss Enamel", tag: "Standard gloss", category: "Oil-Based Paints", tintable: true, finish: "Gloss", pairsWith: ["glossUndercoat", "highGlossThinner"], image: "images/floating/gloss-enamel-two-sizes.png",
     blurb: "Standard alkyd gloss enamel for wood and metal.",
     prep: "Clean, dry surfaces free of oil, grease and flaking material. Fresh surfaces need a primer undercoat.",
     application: "Brush or spray. One to two coats over undercoat. Clean with white spirit.",
     prices: { "1/4L": 90, "1/2L": 160, "1L": 300, "4L": 900, "20L": 4500 } },
-  { id: "glossTexstar", name: "Gloss Texstar", tag: "Economy gloss", category: "Economy Range", tintable: true, pairsWith: ["texstarUndercoat", "highGlossThinner"], spec: { thinning: "Max 1:4 white spirit", drying: "Touch dry 3–4 hrs", spreading: "11–13 sq.m per litre", finish: "Glossy" }, image: null,
+  { id: "glossTexstar", name: "Gloss Texstar", tag: "Economy gloss", category: "Economy Range", tintable: true, finish: "Gloss", pairsWith: ["texstarUndercoat", "highGlossThinner"], spec: { thinning: "Max 1:4 white spirit", drying: "Touch dry 3–4 hrs", spreading: "11–13 sq.m per litre", finish: "Glossy" }, image: null,
     blurb: "Economy gloss finish for wood and metal surfaces.",
     prep: "Clean, dry surfaces free of oil, grease and flaking material.",
     application: "Brush or spray. One to two coats. Clean with white spirit.",
     prices: { "1/4L": 100, "1/2L": 180, "1L": 350, "4L": 1250, "20L": 4850 } },
-  { id: "covermatt", name: "Covermatt", tag: "Economy interior", category: "Economy Range", tintable: true, image: null,
+  { id: "covermatt", name: "Covermatt", tag: "Economy interior", category: "Economy Range", tintable: true, finish: "Matt", image: null,
     blurb: "High-opacity economy matt emulsion for interior walls.",
     prep: "Surfaces clean, dry and free from dust or flaking material.",
     application: "Brush or roller. One to two coats.",
@@ -279,6 +279,7 @@ let cart = JSON.parse(sessionStorage.getItem("apexCart") || "[]");
 let openGroupId = null;
 let mixQty = 1;
 let activeCategory = "All";
+let activeFinish = "All";
 const cardQty = {}; // per-product-card quantity state, keyed by product id
 const cardColor = {}; // per-product-card chosen shade, keyed by product id: {name, hex}
 let colorPickerTargetId = null;
@@ -318,37 +319,43 @@ function fmt(n) { return "KES " + n.toLocaleString(); }
 function saveCart() { sessionStorage.setItem("apexCart", JSON.stringify(cart)); }
 function productById(id) { return CATALOGUE.find(p => p.id === id); }
 
-/* ================= NAV + THEME ================= */
+/* ================= NAV + THEME (multi-page) ================= */
 
-const navBtns = document.querySelectorAll(".nav-btn[data-target]");
-navBtns.forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.getElementById(btn.dataset.target).scrollIntoView({ behavior: "smooth" });
-  });
+// Single-page app style navigation: nav buttons show/hide sections instead of loading files
+const pageSections = document.querySelectorAll("main [data-page]");
+const navButtons = document.querySelectorAll(".nav-btn[data-page]");
+
+function showPage(pageName) {
+  pageSections.forEach(sec => { sec.hidden = sec.dataset.page !== pageName; });
+  navButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.page === pageName));
+  document.body.dataset.page = pageName;
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+}
+
+navButtons.forEach(btn => {
+  btn.addEventListener("click", () => showPage(btn.dataset.page));
 });
-document.querySelectorAll("[data-scroll]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.getElementById(btn.dataset.scroll).scrollIntoView({ behavior: "smooth" });
-  });
+
+// Home hero CTA buttons also act as page links
+document.querySelectorAll("[data-go]").forEach(btn => {
+  btn.addEventListener("click", () => showPage(btn.dataset.go));
 });
 
-const sections = document.querySelectorAll(".section");
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navBtns.forEach(b => b.classList.toggle("active", b.dataset.target === e.target.id));
-    }
-  });
-}, { rootMargin: "-40% 0px -50% 0px" });
-sections.forEach(s => sectionObserver.observe(s));
-
+// Theme persists across reloads via localStorage
 const themeToggle = document.getElementById("themeToggle");
 const iconMoon = document.getElementById("iconMoon");
 const iconSun = document.getElementById("iconSun");
+const savedTheme = localStorage.getItem("apexTheme");
+if (savedTheme === "dark") {
+  document.body.classList.add("dark");
+  iconMoon.hidden = true;
+  iconSun.hidden = false;
+}
 themeToggle.addEventListener("click", () => {
   const isDark = document.body.classList.toggle("dark");
   iconMoon.hidden = isDark;
   iconSun.hidden = !isDark;
+  localStorage.setItem("apexTheme", isDark ? "dark" : "light");
 });
 
 /* ================= COLOUR GROUPS ================= */
@@ -433,12 +440,14 @@ const addToCartBtn = document.getElementById("addToCartBtn");
 const clearMixBtn = document.getElementById("clearMixBtn");
 
 const MIXER_PRODUCTS = CATALOGUE.filter(p => p.tintable);
-MIXER_PRODUCTS.forEach(p => {
-  const opt = document.createElement("option");
-  opt.value = p.id;
-  opt.textContent = p.name;
-  productSelect.appendChild(opt);
-});
+if (productSelect) {
+  MIXER_PRODUCTS.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p.id;
+    opt.textContent = p.name;
+    productSelect.appendChild(opt);
+  });
+}
 
 function currentProduct() { return productById(productSelect.value); }
 
@@ -449,10 +458,14 @@ function populateSizes() {
 }
 
 function selectProductForMixer(id) {
+  showPage("colours");
   productSelect.value = id;
   populateSizes();
   updatePrice();
-  document.getElementById("colors").scrollIntoView({ behavior: "smooth" });
+}
+
+function preselectMixerProductFromUrl() {
+  // No-op in the single-file version — selectProductForMixer() handles this directly now.
 }
 
 function renderMixer() {
@@ -497,55 +510,58 @@ function updatePrice() {
   unitPriceEl.textContent = price ? fmt(price) : "—";
 }
 
-productSelect.addEventListener("change", () => { populateSizes(); updatePrice(); });
-sizeSelect.addEventListener("change", updatePrice);
+if (productSelect) {
+  productSelect.addEventListener("change", () => { populateSizes(); updatePrice(); });
+  sizeSelect.addEventListener("change", updatePrice);
 
-document.getElementById("qtyMinus").addEventListener("click", () => {
-  mixQty = Math.max(1, mixQty - 1);
-  qtyValue.textContent = mixQty;
-});
-document.getElementById("qtyPlus").addEventListener("click", () => {
-  mixQty = Math.min(99, mixQty + 1);
-  qtyValue.textContent = mixQty;
-});
-
-clearMixBtn.addEventListener("click", () => {
-  picks = [];
-  mixQty = 1;
-  qtyValue.textContent = "1";
-  renderMixer();
-  renderShadePanel();
-});
-
-addToCartBtn.addEventListener("click", () => {
-  if (picks.length === 0) return;
-  const product = currentProduct();
-  const size = sizeSelect.value;
-  const unitPrice = product.prices[size];
-  const blend = blendHexes(picks.map(p => p.hex));
-  const nearest = findNearestShade(blend);
-  cart.push({
-    id: Date.now(),
-    type: "mix",
-    shadeNames: picks.map(p => p.name),
-    matchedName: nearest.name,
-    blend,
-    productName: product.name,
-    size, qty: mixQty, unitPrice,
+  document.getElementById("qtyMinus").addEventListener("click", () => {
+    mixQty = Math.max(1, mixQty - 1);
+    qtyValue.textContent = mixQty;
   });
-  saveCart();
-  picks = [];
-  mixQty = 1;
-  qtyValue.textContent = "1";
-  renderMixer();
-  renderShadePanel();
-  renderCart();
-  flashCart();
-});
+  document.getElementById("qtyPlus").addEventListener("click", () => {
+    mixQty = Math.min(99, mixQty + 1);
+    qtyValue.textContent = mixQty;
+  });
+
+  clearMixBtn.addEventListener("click", () => {
+    picks = [];
+    mixQty = 1;
+    qtyValue.textContent = "1";
+    renderMixer();
+    renderShadePanel();
+  });
+
+  addToCartBtn.addEventListener("click", () => {
+    if (picks.length === 0) return;
+    const product = currentProduct();
+    const size = sizeSelect.value;
+    const unitPrice = product.prices[size];
+    const blend = blendHexes(picks.map(p => p.hex));
+    const nearest = findNearestShade(blend);
+    cart.push({
+      id: Date.now(),
+      type: "mix",
+      shadeNames: picks.map(p => p.name),
+      matchedName: nearest.name,
+      blend,
+      productName: product.name,
+      size, qty: mixQty, unitPrice,
+    });
+    saveCart();
+    picks = [];
+    mixQty = 1;
+    qtyValue.textContent = "1";
+    renderMixer();
+    renderShadePanel();
+    renderCart();
+    flashCart();
+  });
+}
 
 /* ================= PRODUCT CATALOGUE / SHOP ================= */
 
 const categoryTabsEl = document.getElementById("categoryTabs");
+const finishTabsEl = document.getElementById("finishTabs");
 const productGrid = document.getElementById("productGrid");
 
 function renderCategoryTabs() {
@@ -560,6 +576,18 @@ function renderCategoryTabs() {
       renderProductCards();
     });
   });
+
+  const finishes = ["All", "Matt", "Silk", "Gloss"];
+  finishTabsEl.innerHTML = finishes.map(f => `
+    <button class="cat-tab finish-tab ${activeFinish === f ? "active" : ""}" data-finish="${f}">${f === "All" ? "All finishes" : f}</button>
+  `).join("");
+  finishTabsEl.querySelectorAll("[data-finish]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      activeFinish = btn.dataset.finish;
+      renderCategoryTabs();
+      renderProductCards();
+    });
+  });
 }
 
 function productCardHtml(p) {
@@ -568,18 +596,20 @@ function productCardHtml(p) {
   const availableSizes = SIZE_ORDER.filter(s => p.prices[s] !== undefined);
   if (cardQty[p.id] === undefined) cardQty[p.id] = 1;
   const chosen = cardColor[p.id];
+  const isUnavailable = p.available === false;
 
   const colorButtonHtml = p.tintable ? `
-    <button class="choose-color-btn ${chosen ? "" : "unset"}" data-choose-color="${p.id}">
+    <button class="choose-color-btn ${chosen ? "" : "unset"}" data-choose-color="${p.id}" ${isUnavailable ? "disabled" : ""}>
       <span class="swatch-dot" style="${chosen ? `background:${chosen.hex}` : ""}"></span>
       ${chosen ? `Colour: ${chosen.name}` : "Choose a colour"}
     </button>
   ` : "";
 
-  const canAdd = hasPrices && (!p.tintable || chosen);
+  const canAdd = hasPrices && (!p.tintable || chosen) && !isUnavailable;
 
   return `
-    <div class="product-card">
+    <div class="product-card ${isUnavailable ? "unavailable" : ""}">
+      ${isUnavailable ? `<span class="unavailable-badge">Currently unavailable</span>` : ""}
       <div class="product-image">
         ${p.image
           ? `<img src="${p.image}" alt="${p.name} container" />`
@@ -594,20 +624,20 @@ function productCardHtml(p) {
         </div>
         ${colorButtonHtml}
         <div class="buy-row">
-          <select class="buy-size" data-buy-size="${p.id}">
+          <select class="buy-size" data-buy-size="${p.id}" ${isUnavailable ? "disabled" : ""}>
             ${availableSizes.map(s => `<option value="${s}">${s}</option>`).join("")}
           </select>
           <div class="qty-stepper small">
-            <button data-buy-minus="${p.id}" type="button">−</button>
+            <button data-buy-minus="${p.id}" type="button" ${isUnavailable ? "disabled" : ""}>−</button>
             <span id="buyQty-${p.id}">${cardQty[p.id]}</span>
-            <button data-buy-plus="${p.id}" type="button">+</button>
+            <button data-buy-plus="${p.id}" type="button" ${isUnavailable ? "disabled" : ""}>+</button>
           </div>
-          <button class="btn btn-primary btn-sm" data-buy-add="${p.id}" ${canAdd ? "" : "disabled"}>Add to cart</button>
+          <button class="btn btn-primary btn-sm" data-buy-add="${p.id}" ${canAdd ? "" : "disabled"}>${isUnavailable ? "Unavailable" : "Add to cart"}</button>
         </div>
-        ${p.tintable && !chosen ? `<p class="feedback-note">Pick a colour above to add this to your cart.</p>` : ""}
+        ${p.tintable && !chosen && !isUnavailable ? `<p class="feedback-note">Pick a colour above to add this to your cart.</p>` : ""}
       ` : `
-        <p class="contact-price">Contact us for pricing</p>
-        <a class="btn btn-outline btn-sm btn-block" href="mailto:apex@apexcoating.com?subject=Price%20enquiry:%20${encodeURIComponent(p.name)}">Enquire</a>
+        <p class="contact-price">${isUnavailable ? "Currently unavailable" : "Contact us for pricing"}</p>
+        ${isUnavailable ? "" : `<a class="btn btn-outline btn-sm btn-block" href="mailto:apex@apexcoating.com?subject=Price%20enquiry:%20${encodeURIComponent(p.name)}">Enquire</a>`}
       `}
       ${p.tintable ? `<button class="mix-link" data-mix-product="${p.id}">Or mix a custom colour →</button>` : ""}
       ${p.pairsWith && p.pairsWith.length ? `
@@ -634,18 +664,27 @@ function productCardHtml(p) {
   `;
 }
 
+function matchesFinish(p) {
+  return activeFinish === "All" || p.finish === activeFinish;
+}
+
 function renderProductCards() {
   let html = "";
   if (activeCategory === "All") {
     CATEGORY_ORDER.forEach(cat => {
-      const items = CATALOGUE.filter(p => p.category === cat);
+      const items = CATALOGUE.filter(p => p.category === cat && matchesFinish(p));
       if (!items.length) return;
       html += `<h3 class="category-heading display">${cat}</h3>`;
       html += `<div class="product-grid">${items.map(productCardHtml).join("")}</div>`;
     });
+    if (!CATEGORY_ORDER.some(cat => CATALOGUE.some(p => p.category === cat && matchesFinish(p)))) {
+      html = `<p class="cart-empty">No products match that finish in this view.</p>`;
+    }
   } else {
-    const items = CATALOGUE.filter(p => p.category === activeCategory);
-    html += `<div class="product-grid">${items.map(productCardHtml).join("")}</div>`;
+    const items = CATALOGUE.filter(p => p.category === activeCategory && matchesFinish(p));
+    html += items.length
+      ? `<div class="product-grid">${items.map(productCardHtml).join("")}</div>`
+      : `<p class="cart-empty">No products match that finish in this category.</p>`;
   }
   productGrid.innerHTML = html;
   wireProductCardEvents();
@@ -668,7 +707,7 @@ function wireProductCardEvents() {
       activeCategory = chip.dataset.gotoCategory;
       renderCategoryTabs();
       renderProductCards();
-      document.getElementById("products").scrollIntoView({ behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
   productGrid.querySelectorAll("[data-buy-minus]").forEach(btn => {
@@ -729,10 +768,12 @@ function closeColorPicker() {
   colorPickerModal.hidden = true;
   colorPickerTargetId = null;
 }
-colorPickerClose.addEventListener("click", closeColorPicker);
-colorPickerModal.addEventListener("click", (e) => {
-  if (e.target === colorPickerModal) closeColorPicker();
-});
+if (colorPickerModal) {
+  colorPickerClose.addEventListener("click", closeColorPicker);
+  colorPickerModal.addEventListener("click", (e) => {
+    if (e.target === colorPickerModal) closeColorPicker();
+  });
+}
 
 function renderColorPickerModal() {
   if (!colorPickerOpenGroup) {
@@ -799,6 +840,9 @@ function renderCart() {
   cartBadge.hidden = cart.length === 0;
   cartBadge.textContent = cart.length;
 
+  // Everything below only exists on cart.html — skip elsewhere
+  if (!cartItemsEl) return;
+
   if (cart.length === 0) {
     cartItemsEl.innerHTML = `<p class="cart-empty">Your cart is empty. Mix a custom colour or shop the range above.</p>`;
   } else {
@@ -861,7 +905,7 @@ function renderCart() {
   cartWhatsappBtn.classList.toggle("btn-disabled", cart.length === 0);
 }
 
-/* ================= FEEDBACK FORM ================= */
+/* ================= FEEDBACK FORM (contact.html only) ================= */
 
 const fbName = document.getElementById("fbName");
 const fbMessage = document.getElementById("fbMessage");
@@ -870,19 +914,18 @@ const fbSend = document.getElementById("fbSend");
 function updateFbButton() {
   fbSend.disabled = fbMessage.value.trim().length === 0;
 }
-fbMessage.addEventListener("input", updateFbButton);
-fbSend.addEventListener("click", () => {
-  const body = encodeURIComponent(`Name: ${fbName.value}\n\n${fbMessage.value}`);
-  window.location.href = `mailto:apex@apexcoating.com?subject=Website%20Feedback&body=${body}`;
-});
+if (fbMessage && fbSend) {
+  fbMessage.addEventListener("input", updateFbButton);
+  fbSend.addEventListener("click", () => {
+    const body = encodeURIComponent(`Name: ${fbName.value}\n\n${fbMessage.value}`);
+    window.location.href = `mailto:apex@apexcoating.com?subject=Website%20Feedback&body=${body}`;
+  });
+}
 
-/* ================= INIT ================= */
+/* ================= INIT (each page only runs what it has) ================= */
 
-renderGroups();
-renderShadePanel();
-populateSizes();
-renderMixer();
-renderCategoryTabs();
-renderProductCards();
-renderCart();
-updateFbButton();
+if (groupGrid) { renderGroups(); renderShadePanel(); }
+if (productSelect) { populateSizes(); renderMixer(); preselectMixerProductFromUrl(); }
+if (categoryTabsEl) { renderCategoryTabs(); renderProductCards(); }
+renderCart(); // updates the sidebar badge on every page; cart.html gets the full list too
+if (fbMessage) updateFbButton();
