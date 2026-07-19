@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Learn — Apex Coating (EA) Ltd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="learn">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="logo-badge">
+      <img src="images/apex-logo.png" alt="Apex Coating (EA) Ltd" />
+    </div>
+    <div class="logo-badge logo-badge-premier">
+      <img src="images/premier-coat-logo.png" alt="Premier Coat" />
+    </div>
+    <div class="brand-stripe"></div>
+    <div class="nav-links">
+      <a class="nav-btn" data-page="home" href="index.html">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="tooltip">Home</span>
+      </a>
+      <a class="nav-btn" data-page="colours" href="colours.html">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+        <span class="tooltip">Colours</span>
+      </a>
+      <a class="nav-btn" data-page="products" href="products.html">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+        <span class="tooltip">Products</span>
+      </a>
+      <a class="nav-btn" data-page="cart" href="cart.html">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 2-1.58l1.65-7.42H5.12"/></svg>
+        <span class="tooltip">Cart</span>
+        <span id="cartBadge" class="cart-badge" hidden>0</span>
+      </a>
+      <a class="nav-btn" data-page="learn" href="learn.html">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span class="tooltip">Learn</span>
+      </a>
+      <a class="nav-btn" data-page="contact" href="contact.html">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span class="tooltip">Contact</span>
+      </a>
+    </div>
+    <button id="themeToggle" class="nav-btn theme-btn">
+      <svg id="iconMoon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      <svg id="iconSun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" hidden><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button>
+  </nav>
+
+  <main>
+    <section class="section">
+      <p class="eyebrow">Learn</p>
+      <h2 class="display section-title">Paint types, finishes &amp; how to use them</h2>
+      <p class="section-sub">A quick guide before you buy — what each paint type is for, and where it works best.</p>
+
+      <div class="learn-grid">
+        <div class="card learn-card">
+          <h3 class="display">Emulsion (water-based)</h3>
+          <p>Water-thinned paint for interior and exterior walls. Low odour, quick-drying, easy to clean up with water. Best for walls, ceilings and plaster.</p>
+        </div>
+        <div class="card learn-card">
+          <h3 class="display">Enamel / gloss (oil-based)</h3>
+          <p>Solvent-thinned paint with a hard, shiny, washable finish. Best for wood, metal, doors, window frames and areas that need frequent wiping down.</p>
+        </div>
+        <div class="card learn-card">
+          <h3 class="display">Matt finish</h3>
+          <p>Flat, non-reflective look that hides surface imperfections well. Great for ceilings and living spaces with lower traffic.</p>
+        </div>
+        <div class="card learn-card">
+          <h3 class="display">Silk / satin finish</h3>
+          <p>A soft sheen with better wipe-clean resistance than matt. Suited to kitchens, hallways, and family areas.</p>
+        </div>
+        <div class="card learn-card">
+          <h3 class="display">Gloss finish</h3>
+          <p>Highly reflective and the most durable, scrubbable finish. Ideal for doors, skirting, railings and metalwork.</p>
+        </div>
+        <div class="card learn-card">
+          <h3 class="display">Weathershield (exterior)</h3>
+          <p>Formulated to withstand rain, UV and temperature swings. Use on external walls, facades and render.</p>
+        </div>
+        <div class="card learn-card">
+          <h3 class="display">Primers &amp; undercoats</h3>
+          <p>Applied first on new or bare surfaces to improve adhesion and even out porosity before the topcoat goes on.</p>
+        </div>
+        <div class="card learn-card">
+          <h3 class="display">Thinners &amp; solvents</h3>
+          <p>Used to adjust paint consistency for spraying or brushing, and to clean equipment. Match the thinner to the paint type — oil-based paints need oil-based thinners.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
